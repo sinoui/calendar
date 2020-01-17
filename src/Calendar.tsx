@@ -270,6 +270,7 @@ function Calendar(props: Props) {
           dayNum={day}
           isLastChecked={isLastChecked}
           eachHeight={props.eachHeight}
+          todayBeforeForbidden={props.todayBeforeForbidden}
         />
       );
       break;

@@ -7,7 +7,7 @@ import CalendarDayItem from './CalendarDayItem';
 
 const Month = styled.div<{ eachHeight?: number }>`
   display: grid;
-  justify-items: center;
+  justify-items: start;
   align-items: center;
   width: 75px;
   height: ${(props) => (props.eachHeight ? `${props.eachHeight}px` : '40px')};
