@@ -322,7 +322,6 @@ function Calendar(props: Props) {
    */
   const handleChangeTime = (value: string) => {
     setTime(value);
-
     renderValue();
   };
 
@@ -360,10 +359,17 @@ function Calendar(props: Props) {
       {showTime ? (
         <>
           {timeOpen ? (
-            <TimeSelectPanel time={time} handleChangeTime={handleChangeTime} />
+            <TimeSelectPanel
+              time={time}
+              handleChangeTime={handleChangeTime}
+              monthChecked={monthChecked}
+              yearChecked={yearChecked}
+              day={day}
+            />
           ) : (
             CalendarDate()
           )}
+          <Divider style={{ marginBottom: '8px' }} />
           <TimeButton
             handleDate={handleDate}
             handleTime={handleTime}
