@@ -11,17 +11,19 @@ interface Props {
   handleDate: () => void;
   handleTime: () => void;
   onOk: () => void;
+  onlyShowTime?: string;
 }
 
 export default function TimeButton(props: Props) {
-  const { timeOpen, handleDate, handleTime, onOk } = props;
+  const { timeOpen, handleDate, handleTime, onOk, onlyShowTime } = props;
   return (
     <ButtonContent>
-      {timeOpen ? (
-        <Button onClick={handleDate}>选择日期</Button>
-      ) : (
-        <Button onClick={handleTime}>选择时间</Button>
-      )}
+      {!onlyShowTime &&
+        (timeOpen ? (
+          <Button onClick={handleDate}>选择日期</Button>
+        ) : (
+          <Button onClick={handleTime}>选择时间</Button>
+        ))}
       <Button onClick={onOk}>确定</Button>
     </ButtonContent>
   );

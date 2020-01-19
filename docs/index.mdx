@@ -37,11 +37,35 @@ yarn add @sinoui/calendar
   }}
 </Playground>
 
-## 设置显示时间的日历
+## 设置显示时间的日历，时分秒
 
 <Playground>
   {() => {
-    return <Calendar showTime />;
+    return <Calendar showTime='HH:mm:ss' />;
+  }}
+</Playground>
+
+## 设置显示时间的日历,只是时分
+
+<Playground>
+  {() => {
+    return <Calendar showTime='HH:mm' />;
+  }}
+</Playground>
+
+## 设置只是显示时间,时分秒
+
+<Playground>
+  {() => {
+    return <Calendar onlyShowTime='HH:mm:ss' />;
+  }}
+</Playground>
+
+## 设置只是显示时间,时分
+
+<Playground>
+  {() => {
+    return <Calendar onlyShowTime='HH:mm' />;
   }}
 </Playground>
 
@@ -91,8 +115,9 @@ Calendar 组件属性：
 | -------------------- | ----------------------- | -------------------------- |
 | onChange             | (value: string) => void | 日期选择事件监听           |
 | eachHeight           | number                  | 每个格子的高度             |
-| showTime             | boolean                 | 是否显示时间               |
+| showTime             | string                 | 是否显示时间               |
 | todayBeforeForbidden | boolean                 | 禁止选择当前日期之前的日期 |
 | onlyYearMonth        | boolean                 | 只是选择年月               |
 | onOk                 | ()=>void                | 点击确定按钮的回调         |
 | className   | string          | 自定义类名                                                   |
+| onlyShowTime   | string          | 只是显示时间    |

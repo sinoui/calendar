@@ -33,7 +33,7 @@ export interface Props {
   /**
    * 是否显示时间
    */
-  showTime?: boolean;
+  showTime?: string;
   /**
    * 点击确定按钮的回调
    */
@@ -42,6 +42,10 @@ export interface Props {
    * 自定义类名
    */
   className?: string;
+  /**
+   * 只是选择时间
+   */
+  onlyShowTime?: string;
   modelState: number;
   monthLastChecked: number;
   yearLastChecked: number;
@@ -116,7 +120,11 @@ function Calendar(props: Props) {
         .toString()
         .padStart(2, '0');
 
-      setTime(`${hours}:${minutes}:${seconds}`);
+      if (props.showTime === 'HH:mm' || props.onlyShowTime === 'HH:mm') {
+        setTime(`${hours}:${minutes}`);
+      } else {
+        setTime(`${hours}:${minutes}:${seconds}`);
+      }
     }
   };
 
@@ -189,11 +197,15 @@ function Calendar(props: Props) {
   const renderValue = () => {
     if (props.onChange) {
       if (props.showTime) {
-        props.onChange(
-          `${yearChecked}-${monthChecked
-            .toString()
-            .padStart(2, '0')}-${day.toString().padStart(2, '0')} ${time}`,
-        );
+        if (props.onlyShowTime) {
+          props.onChange(`${time}`);
+        } else {
+          props.onChange(
+            `${yearChecked}-${monthChecked
+              .toString()
+              .padStart(2, '0')}-${day.toString().padStart(2, '0')} ${time}`,
+          );
+        }
       } else {
         props.onChange(
           `${yearChecked}-${monthChecked
@@ -282,7 +294,6 @@ function Calendar(props: Props) {
           dayNum={day}
           isLastChecked={isLastChecked}
           eachHeight={props.eachHeight}
-          todayBeforeForbidden={props.todayBeforeForbidden}
         />
       );
       break;
@@ -368,9 +379,33 @@ function Calendar(props: Props) {
     );
   };
 
-  const { showTime } = props;
+  const { showTime, onlyShowTime } = props;
+
+  if (onlyShowTime) {
+    return (
+      <CalendarLayout>
+        <TimeSelectPanel
+          time={time}
+          handleChangeTime={handleChangeTime}
+          monthChecked={monthChecked}
+          yearChecked={yearChecked}
+          day={day}
+          showTime={showTime}
+          onlyShowTime={onlyShowTime}
+        />
+        <TimeButton
+          handleDate={handleDate}
+          handleTime={handleTime}
+          timeOpen={timeOpen}
+          onOk={onOk}
+          onlyShowTime={onlyShowTime}
+        />
+      </CalendarLayout>
+    );
+  }
+
   return (
-    <CalendarLayout className="sinoui-calendar">
+    <CalendarLayout>
       {showTime ? (
         <>
           {timeOpen ? (
@@ -380,6 +415,7 @@ function Calendar(props: Props) {
               monthChecked={monthChecked}
               yearChecked={yearChecked}
               day={day}
+              showTime={showTime}
             />
           ) : (
             CalendarDate()

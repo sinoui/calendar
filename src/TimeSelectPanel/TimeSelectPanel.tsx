@@ -1,20 +1,24 @@
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { MenuListItem, MenuList } from 'sinoui-components/Menu';
+import Divider from 'sinoui-components/Divider';
 import TimeSelectPanelLayout from './TimeSelectPanelLayout';
 
 /**
  * 时间组件
  */
 
-const TimeSelectBox = styled.div`
+const TimeSelectBox = styled.div<{ showTime?: string; onlyShowTime?: string }>`
   display: grid;
-  grid-template-columns: repeat(3, 33.33%);
+  grid-template-columns: ${(props) =>
+    props.showTime === 'HH:mm' || props.onlyShowTime === 'HH:mm'
+      ? 'repeat(2, 50%)'
+      : 'repeat(3, 33.33%)'};
   justify-content: center;
   grid-gap: 2px 2px;
   min-height: 270px;
   background-color: ${(props) => props.theme.palette.page};
-  padding: 0px 8px 8px 8px;
+  padding: 0px 8px 0px;
 `;
 
 const Div = styled.div`
@@ -29,8 +33,13 @@ const Date = styled.div`
   padding: 10px 10px 5px;
 `;
 
-const MenuListContent = styled(MenuList)`
+const MenuListContent = styled(MenuList)<{
+  showTime?: string;
+  onlyShowTime?: string;
+}>`
   border-right: ${(props) =>
+    props.showTime !== 'HH:mm' &&
+    props.onlyShowTime !== 'HH:mm' &&
     `1px solid ${props.theme.palette.background.divider}`};
 `;
 
@@ -42,6 +51,7 @@ const MenuListItemContent = styled(MenuListItem)`
 interface Props {
   time: string;
   handleChangeTime: (value: string) => void;
+  showTime?: string;
 }
 
 const hours: string[] = [];
@@ -79,10 +89,19 @@ interface Props {
   monthChecked: number;
   day: number;
   time: string;
+  showTime?: string;
+  onlyShowTime?: string;
 }
 
 export default function TimeSelectPanel(props: Props) {
-  const { time, yearChecked, monthChecked, day } = props;
+  const {
+    time,
+    yearChecked,
+    monthChecked,
+    day,
+    showTime,
+    onlyShowTime,
+  } = props;
 
   const h = time.substring(0, 2);
   // eslint-disable-next-line radix
@@ -94,6 +113,7 @@ export default function TimeSelectPanel(props: Props) {
 
   const hourRef = useRef(null);
   const minuteRef = useRef(null);
+
   const secondRef = useRef(null);
 
   useEffect(() => {
@@ -103,17 +123,20 @@ export default function TimeSelectPanel(props: Props) {
     if (minuteRef) {
       minuteRef.current.scrollTop = 32 * minuteNum;
     }
-    if (secondRef) {
+    if (secondRef && showTime !== 'HH:mm' && onlyShowTime !== 'HH:mm') {
       secondRef.current.scrollTop = 32 * secondNum;
     }
-  }, [hourNum, minuteNum, secondNum]);
+  }, [hourNum, minuteNum, onlyShowTime, secondNum, showTime]);
 
   return (
     <TimeSelectPanelLayout>
-      <Date>
-        {yearChecked}年{monthChecked}月{day}日
-      </Date>
-      <TimeSelectBox>
+      {!onlyShowTime && (
+        <Date>
+          {yearChecked}年{monthChecked}月{day}日
+        </Date>
+      )}
+      <Divider />
+      <TimeSelectBox showTime={showTime} onlyShowTime={onlyShowTime}>
         <Div ref={hourRef}>
           <MenuListContent>
             {hours.map((hour) => (
@@ -122,9 +145,13 @@ export default function TimeSelectPanel(props: Props) {
                 key={hour}
                 selected={hour === time.substring(0, 2)}
                 onClick={() =>
-                  props.handleChangeTime(
-                    time.replace(/\d{2}(:\d{2}:\d{2})/g, `${hour}$1`),
-                  )
+                  showTime === 'HH:mm' || onlyShowTime === 'HH:mm'
+                    ? props.handleChangeTime(
+                        time.replace(/\d{2}(:\d{2})/g, `${hour}$1`),
+                      )
+                    : props.handleChangeTime(
+                        time.replace(/\d{2}(:\d{2}:\d{2})/g, `${hour}$1`),
+                      )
                 }
               >
                 {hour}
@@ -133,16 +160,20 @@ export default function TimeSelectPanel(props: Props) {
           </MenuListContent>
         </Div>
         <Div ref={minuteRef}>
-          <MenuListContent>
+          <MenuListContent showTime={showTime} onlyShowTime={onlyShowTime}>
             {minutes.map((minute) => (
               <MenuListItemContent
                 value={minute}
                 key={minute}
                 selected={minute === time.substring(3, 5)}
                 onClick={() =>
-                  props.handleChangeTime(
-                    time.replace(/(\d{2}:)\d{2}(:\d{2})/g, `$1${minute}$2`),
-                  )
+                  showTime === 'HH:mm' || onlyShowTime === 'HH:mm'
+                    ? props.handleChangeTime(
+                        time.replace(/(\d{2}:)\d{2}/g, `$1${minute}`),
+                      )
+                    : props.handleChangeTime(
+                        time.replace(/(\d{2}:)\d{2}(:\d{2})/g, `$1${minute}$2`),
+                      )
                 }
               >
                 {minute}
@@ -150,25 +181,28 @@ export default function TimeSelectPanel(props: Props) {
             ))}
           </MenuListContent>
         </Div>
-        <Div ref={secondRef}>
-          <MenuList>
-            {seconds.map((second) => (
-              <MenuListItemContent
-                value={second}
-                key={second}
-                selected={second === time.substring(6, 8)}
-                onClick={() =>
-                  props.handleChangeTime(
-                    time.replace(/(\d{2}:\d{2}:)\d{2}/g, `$1${second}`),
-                  )
-                }
-              >
-                {second}
-              </MenuListItemContent>
-            ))}
-          </MenuList>
-        </Div>
+        {showTime !== 'HH:mm' && onlyShowTime !== 'HH:mm' && (
+          <Div ref={secondRef}>
+            <MenuList>
+              {seconds.map((second) => (
+                <MenuListItemContent
+                  value={second}
+                  key={second}
+                  selected={second === time.substring(6, 8)}
+                  onClick={() =>
+                    props.handleChangeTime(
+                      time.replace(/(\d{2}:\d{2}:)\d{2}/g, `$1${second}`),
+                    )
+                  }
+                >
+                  {second}
+                </MenuListItemContent>
+              ))}
+            </MenuList>
+          </Div>
+        )}
       </TimeSelectBox>
+      {onlyShowTime && <Divider />}
     </TimeSelectPanelLayout>
   );
 }
