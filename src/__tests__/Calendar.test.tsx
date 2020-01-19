@@ -17,7 +17,7 @@ describe('Calendar 单元测试', () => {
       </TestWrapper>,
     );
 
-    // const calendarDay = getByTestId('calendarDay');
+    const calendarDay = getByTestId('calendarDay');
     // const closeButton = getByTestId('closeButton');
 
     // expect(calendarDay).toHaveTextContent('提示信息');

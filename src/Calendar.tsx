@@ -405,7 +405,7 @@ function Calendar(props: Props) {
   }
 
   return (
-    <CalendarLayout>
+    <CalendarLayout data-testid="calendarDay">
       {showTime ? (
         <>
           {timeOpen ? (
