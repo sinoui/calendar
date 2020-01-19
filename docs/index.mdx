@@ -52,3 +52,46 @@ yarn add @sinoui/calendar
     return <Calendar todayBeforeForbidden />;
   }}
 </Playground>
+
+## 设置只是选择年月
+
+<Playground>
+  {() => {
+    return <Calendar onlyYearMonth />;
+  }}
+</Playground>
+
+## 深色背景
+
+import { ThemeProvider } from 'styled-components';
+import { defaultTheme, createTheme, createPalette } from '@sinoui/theme';
+
+<Playground>
+  {() => {
+    const theme = createTheme({
+    palette: createPalette({
+      type: 'dark', // 渲染黑色背景
+    }),
+  });
+  return (    
+    <ThemeProvider theme={theme}> 
+      <div style={{background:'black',padding:'50px'}}>
+       <Calendar  />
+      </div>
+    </ThemeProvider>
+  ) 
+  }}
+</Playground>  
+
+## API
+
+Calendar 组件属性：
+
+| 参数名称             | 参数类型                | 说明                       |
+| -------------------- | ----------------------- | -------------------------- |
+| onChange             | (value: string) => void | 日期选择事件监听           |
+| eachHeight           | number                  | 每个格子的高度             |
+| showTime             | boolean                 | 是否显示时间               |
+| todayBeforeForbidden | boolean                 | 禁止选择当前日期之前的日期 |
+| onlyYearMonth        | boolean                 | 只是选择年月               |
+| onOk                 | ()=>void                | 点击确定按钮的回调         |

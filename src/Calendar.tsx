@@ -43,6 +43,9 @@ export interface Props {
   isLastChecked: boolean;
   day: number;
   allDayLastChecked: string | number;
+  /**
+   * 点击确定按钮的回调
+   */
   onOk: () => void;
 }
 
@@ -157,7 +160,12 @@ function Calendar(props: Props) {
    * @memberof Calendar
    */
   const checkMonth = (monthNum: number) => {
-    setModelState(0);
+    if (props.onlyYearMonth) {
+      setModelState(2);
+    } else {
+      setModelState(0);
+    }
+
     setMonthChecked(monthNum);
     setIsLastChecked(false);
 
@@ -330,6 +338,9 @@ function Calendar(props: Props) {
    */
   const onOk = () => {
     renderValue();
+    if (props.onOk) {
+      props.onOk();
+    }
   };
 
   const CalendarDate = () => {

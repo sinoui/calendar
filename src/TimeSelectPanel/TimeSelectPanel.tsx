@@ -151,7 +151,7 @@ export default function TimeSelectPanel(props: Props) {
           </MenuListContent>
         </Div>
         <Div ref={secondRef}>
-          <MenuListContent>
+          <MenuList>
             {seconds.map((second) => (
               <MenuListItemContent
                 value={second}
@@ -166,7 +166,7 @@ export default function TimeSelectPanel(props: Props) {
                 {second}
               </MenuListItemContent>
             ))}
-          </MenuListContent>
+          </MenuList>
         </Div>
       </TimeSelectBox>
     </TimeSelectPanelLayout>
