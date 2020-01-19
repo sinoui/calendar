@@ -34,6 +34,14 @@ export interface Props {
    * 是否显示时间
    */
   showTime?: boolean;
+  /**
+   * 点击确定按钮的回调
+   */
+  onOk: () => void;
+  /**
+   * 自定义类名
+   */
+  className?: string;
   modelState: number;
   monthLastChecked: number;
   yearLastChecked: number;
@@ -43,10 +51,6 @@ export interface Props {
   isLastChecked: boolean;
   day: number;
   allDayLastChecked: string | number;
-  /**
-   * 点击确定按钮的回调
-   */
-  onOk: () => void;
 }
 
 function Calendar(props: Props) {
@@ -366,7 +370,7 @@ function Calendar(props: Props) {
 
   const { showTime } = props;
   return (
-    <CalendarLayout>
+    <CalendarLayout className="sinoui-calendar">
       {showTime ? (
         <>
           {timeOpen ? (

@@ -1,3 +1,3 @@
-import Counter from './Counter';
+import Calendar from './Calendar';
 
-export default Counter;
+export default Calendar;

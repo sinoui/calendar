@@ -17,7 +17,11 @@ interface Props {
 
 function CalendarWeekBarLayout(props: Props) {
   const { children } = props;
-  return <CalendarWeekBarBox>{children}</CalendarWeekBarBox>;
+  return (
+    <CalendarWeekBarBox className="sinoui-calendar-week">
+      {children}
+    </CalendarWeekBarBox>
+  );
 }
 
 export default CalendarWeekBarLayout;

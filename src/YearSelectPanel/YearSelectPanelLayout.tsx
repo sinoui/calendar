@@ -19,5 +19,9 @@ interface Props {
 
 export default function YearSelectPanelLayout(props: Props) {
   const { children } = props;
-  return <YearSelectPanelBox>{children}</YearSelectPanelBox>;
+  return (
+    <YearSelectPanelBox className="sinoui-calendar-year">
+      {children}
+    </YearSelectPanelBox>
+  );
 }

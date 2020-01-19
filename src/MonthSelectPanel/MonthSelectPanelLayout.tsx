@@ -19,5 +19,9 @@ interface Props {
 
 export default function CalendarDayGridLayout(props: Props) {
   const { children } = props;
-  return <MonthSelectPanelBox>{children}</MonthSelectPanelBox>;
+  return (
+    <MonthSelectPanelBox className="sinoui-calendar-month">
+      {children}
+    </MonthSelectPanelBox>
+  );
 }

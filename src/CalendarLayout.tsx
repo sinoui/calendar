@@ -14,5 +14,5 @@ interface Props {
 
 export default function CalendarLayout(props: Props) {
   const { children } = props;
-  return <CalendarBox>{children}</CalendarBox>;
+  return <CalendarBox className="sinoui-calendar">{children}</CalendarBox>;
 }

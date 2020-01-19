@@ -13,7 +13,11 @@ interface Props {
 
 function CalendarHeaderLayout(props: Props) {
   const { children } = props;
-  return <CalendarHeaderBox>{children}</CalendarHeaderBox>;
+  return (
+    <CalendarHeaderBox className="sinoui-calendar-header">
+      {children}
+    </CalendarHeaderBox>
+  );
 }
 
 export default CalendarHeaderLayout;

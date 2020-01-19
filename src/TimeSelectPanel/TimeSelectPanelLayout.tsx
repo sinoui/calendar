@@ -6,5 +6,5 @@ interface Props {
 
 export default function TimeSelectPanelLayout(props: Props) {
   const { children } = props;
-  return <div>{children}</div>;
+  return <div className="sinoui-calendar-time">{children}</div>;
 }

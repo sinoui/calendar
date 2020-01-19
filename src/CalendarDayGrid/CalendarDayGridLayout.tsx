@@ -22,5 +22,9 @@ interface Props {
 
 export default function CalendarDayGridLayout(props: Props) {
   const { weekDay, children } = props;
-  return <CalendarDayGridBox weekDay={weekDay}>{children}</CalendarDayGridBox>;
+  return (
+    <CalendarDayGridBox weekDay={weekDay} className="sinoui-calendar-day">
+      {children}
+    </CalendarDayGridBox>
+  );
 }
