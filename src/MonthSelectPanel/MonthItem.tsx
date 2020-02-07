@@ -1,35 +1,65 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Subheading } from 'sinoui-components/Text';
+import { Theme } from '@sinoui/theme';
 
 export interface Props {
+  /**
+   * 月份（一月份）
+   */
   title?: string;
+  /**
+   * 是否是同一个月
+   */
   sameMonth?: boolean;
+  /**
+   * 是否被选中
+   */
   checked?: boolean;
+  /**
+   * 选择月的回调函数
+   */
   selectMonth: (value: number) => void;
+  /**
+   * 是否当前月
+   */
   enable?: boolean;
+  /**
+   * 月份（1）
+   */
   monthNum: number;
+  /**
+   * 设置每个格子的高度
+   */
   eachHeight?: number;
 }
 
-const backgroundFun = (props: { checked?: boolean; enable?: boolean }) => {
+const backgroundFun = (props: {
+  checked?: boolean;
+  enable?: boolean;
+  theme?: Theme;
+}) => {
   const { checked, enable } = props;
   if (checked) {
-    return props.theme.palette.primary[500];
+    return props.theme && props.theme.palette.primary[500];
   }
   if (enable) {
-    return props.theme.palette.background.divider;
+    return props.theme && props.theme.palette.background.divider;
   }
   return null;
 };
 
-const borderFun = (props: { checked?: boolean; sameMonth?: boolean }) => {
+const borderFun = (props: {
+  checked?: boolean;
+  sameMonth?: boolean;
+  theme?: Theme;
+}) => {
   const { sameMonth, checked } = props;
   if (sameMonth && checked) {
-    return `1px solid ${props.theme.palette.primary[500]}`;
+    return props.theme && `1px solid ${props.theme.palette.primary[500]}`;
   }
   if (sameMonth) {
-    return `1px solid ${props.theme.palette.text.secondary}`;
+    return props.theme && `1px solid ${props.theme.palette.text.secondary}`;
   }
   return null;
 };

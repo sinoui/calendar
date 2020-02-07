@@ -3,13 +3,53 @@ import styled from 'styled-components';
 import { Body1 } from 'sinoui-components/Text';
 
 export interface Props {
+  /**
+   * 年
+   */
   title: string;
+  /**
+   * 是否同一年
+   */
   sameYear?: boolean;
+  /**
+   * 是否选中
+   */
   checked?: boolean;
+  /**
+   * 选择年的回调函数
+   */
   selectYear: (value: string) => void;
+  /**
+   * 是否当前年
+   */
   enable?: boolean;
+  /**
+   * 每个格子的高度
+   */
   eachHeight?: number;
 }
+
+const backgroundFun = (props: { checked?: boolean; enable?: boolean }) => {
+  const { checked, enable } = props;
+  if (checked) {
+    return props.theme.palette.primary[500];
+  }
+  if (enable) {
+    return props.theme.palette.background.divider;
+  }
+  return null;
+};
+
+const borderFun = (props: { checked?: boolean; sameMonth?: boolean }) => {
+  const { sameMonth, checked } = props;
+  if (sameMonth && checked) {
+    return `1px solid ${props.theme.palette.primary[500]}`;
+  }
+  if (sameMonth) {
+    return `1px solid ${props.theme.palette.text.secondary}`;
+  }
+  return null;
+};
 
 const YearBox = styled.div<{
   sameYear?: boolean;
@@ -24,16 +64,8 @@ const YearBox = styled.div<{
   display: grid;
   justify-content: center;
   align-items: center;
-  background: ${(props) =>
-    props.checked ? props.theme.palette.primary[500] : null};
-  background: ${(props) =>
-    props.enable ? props.theme.palette.background.divider : null};
-  border: ${(props) =>
-    props.sameYear ? `1px solid ${props.theme.palette.text.secondary}` : null};
-  border: ${(props) =>
-    props.sameYear && props.checked
-      ? `1px solid ${props.theme.palette.primary[500]}`
-      : null};
+  background: ${(props) => backgroundFun(props)};
+  border: ${(props) => borderFun(props)};
   box-shadow: ${(props) =>
     props.sameYear
       ? `inset 0 0 0 1px ${props.theme.palette.background.paper}`

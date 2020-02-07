@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState } from 'react';
 import Divider from 'sinoui-components/Divider';
 import dayjs from 'dayjs';
 import CalendarDayGrid from './CalendarDayGrid';
@@ -66,12 +66,21 @@ export interface Props {
    * 选择的年
    */
   yearChecked: number;
+  /**
+   * 年面板，向前或者向后,1或者-1
+   */
   prevAndNext: number;
+  /**
+   * 是否最后选中
+   */
   isLastChecked: boolean;
   /**
    * 选择的日
    */
   day: number;
+  /**
+   * 点击日后选择的日期
+   */
   allDayLastChecked: string | number;
 }
 
@@ -79,85 +88,39 @@ export interface Props {
  * 日历整体组件
  */
 function Calendar(props: Props) {
-  const now = new Date();
-  const monthNow = now.getMonth() + 1;
-  const yearNow = now.getFullYear();
-  const hour = now
-    .getHours()
+  const { dateTime, onlyYearMonth, showTime, onlyShowTime } = props;
+  const date = dateTime ? dayjs(dateTime) : dayjs();
+  const month = date.month() + 1;
+  const year = date.year();
+  const dayNow = date.date();
+  const hour = date
+    .hour()
     .toString()
     .padStart(2, '0');
-  const minute = now
-    .getMinutes()
+  const minute = date
+    .minute()
     .toString()
     .padStart(2, '0');
-  const second = now
-    .getSeconds()
+  const second = date
+    .second()
     .toString()
     .padStart(2, '0');
-  const { onlyYearMonth } = props;
 
   const [modelState, setModelState] = useState(onlyYearMonth ? 2 : 0);
-  const [monthLastChecked, setMonthLastChecked] = useState(monthNow);
-  const [yearLastChecked, setYearLastChecked] = useState(yearNow);
-  const [monthChecked, setMonthChecked] = useState(monthNow);
-  const [yearChecked, setYearChecked] = useState(yearNow);
+  const [monthLastChecked, setMonthLastChecked] = useState(month);
+  const [yearLastChecked, setYearLastChecked] = useState(year);
+  const [monthChecked, setMonthChecked] = useState(month);
+  const [yearChecked, setYearChecked] = useState(year);
   const [prevAndNext, setPrevAndNext] = useState(0);
-  const [day, setDay] = useState(0);
-  const [isLastChecked, setIsLastChecked] = useState(false);
+  const [day, setDay] = useState(dateTime ? dayNow : 0);
+  const [isLastChecked, setIsLastChecked] = useState(!!dateTime);
   const [allDayLastChecked, setAllDayLastChecked] = useState('');
   const [timeOpen, setTimeOpen] = useState(false);
-  const [time, setTime] = useState(`${hour}:${minute}:${second}`);
-
-  /**
-   * 初始化日期
-   *
-   * @param {*} dateTime
-   * @memberof Calendar
-   */
-  const dateInit = useCallback(
-    (dateStr?: string) => {
-      const date = dateStr ? dayjs(dateStr) : dayjs();
-      const month = date.month() + 1;
-      const year = date.year();
-      const dayVal = date.date();
-
-      setIsLastChecked(dateStr ? true : isLastChecked);
-      setMonthLastChecked(month);
-      setYearLastChecked(year);
-      setMonthChecked(month);
-      setYearChecked(year);
-      setDay(dayVal);
-
-      const { onlyShowTime, showTime } = props;
-
-      if (props.showTime) {
-        const hours = date
-          .hour()
-          .toString()
-          .padStart(2, '0');
-        const minutes = date
-          .minute()
-          .toString()
-          .padStart(2, '0');
-        const seconds = date
-          .second()
-          .toString()
-          .padStart(2, '0');
-
-        if (showTime === 'HH:mm' || onlyShowTime === 'HH:mm') {
-          setTime(`${hours}:${minutes}`);
-        } else {
-          setTime(`${hours}:${minutes}:${seconds}`);
-        }
-      }
-    },
-    [isLastChecked, props],
+  const [time, setTime] = useState(
+    showTime === 'HH:mm' || onlyShowTime === 'HH:mm'
+      ? `${hour}:${minute}`
+      : `${hour}:${minute}:${second}`,
   );
-
-  useEffect(() => {
-    const { dateTime } = props;
-    dateInit(dateTime);
-  }, [dateInit, props]);
 
   /**
    * 点击日历头  年部分切换日历主体
@@ -200,6 +163,7 @@ function Calendar(props: Props) {
   const checkMonth = (monthNum: number) => {
     if (props.onlyYearMonth) {
       setModelState(2);
+      setYearLastChecked(yearChecked);
     } else {
       setModelState(0);
     }
@@ -249,6 +213,7 @@ function Calendar(props: Props) {
    */
   const selectDay = (dayVal: number, e: React.MouseEvent) => {
     e.stopPropagation();
+
     const selectDayVal = `${yearChecked}-${monthChecked
       .toString()
       .padStart(2, '0')}-${dayVal.toString().padStart(2, '0')}`;
@@ -348,6 +313,7 @@ function Calendar(props: Props) {
           isLastChecked={isLastChecked}
           allDayLastChecked={allDayLastChecked}
           eachHeight={props.eachHeight}
+          onlyYearMonth={props.onlyYearMonth}
         />
       );
   }
@@ -391,8 +357,6 @@ function Calendar(props: Props) {
           onClickYearMonthSelect={changeModelState}
           onClickPrevButton={prevButton}
           onClickNextButton={nextButton}
-          yearLastChecked={yearLastChecked}
-          monthLastChecked={monthLastChecked}
           monthChecked={monthChecked}
           yearChecked={yearChecked}
           modelState={modelState}
@@ -404,8 +368,6 @@ function Calendar(props: Props) {
       </>
     );
   };
-
-  const { showTime, onlyShowTime } = props;
 
   if (onlyShowTime) {
     return (

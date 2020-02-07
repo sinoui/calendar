@@ -16,13 +16,37 @@ const Month = styled.div<{ eachHeight?: number }>`
 `;
 
 export interface Props {
+  /**
+   * 最后选择的月份
+   */
   monthLastChecked?: number;
+  /**
+   * 最后选择的年
+   */
   yearLastChecked?: number;
+  /**
+   * 选择的月份
+   */
   monthChecked: number;
+  /**
+   * 选择的年
+   */
   yearChecked?: number;
+  /**
+   * 是否最后选中
+   */
   isLastChecked?: boolean;
+  /**
+   * 选择的日
+   */
   dayNum?: number;
+  /**
+   * 点击天的回调函数
+   */
   selectDay?: (value: number, e: React.MouseEvent) => void;
+  /**
+   * 每个格子的高度
+   */
   eachHeight?: number;
 }
 
@@ -87,6 +111,7 @@ export default function CalendarDayGrid(props: Props) {
       dayArr.push(
         <CalendarDayItem
           dayNum={i}
+          key={i}
           selectDay={props.selectDay}
           checked={isChecked(i)}
           enable={isEnable(i)}
@@ -152,9 +177,7 @@ export default function CalendarDayGrid(props: Props) {
         <Body2>{monthCh}</Body2>
       </Month>
       {weekDay <= 1 ? <br /> : null}
-      <CalendarDayGridLayout weekDay={weekDay}>
-        {dayArr.map((day) => day)}
-      </CalendarDayGridLayout>
+      <CalendarDayGridLayout>{dayArr.map((day) => day)}</CalendarDayGridLayout>
     </>
   );
 }

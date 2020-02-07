@@ -1,15 +1,65 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Subheading } from 'sinoui-components/Text';
+import { Theme } from '@sinoui/theme';
 
 export interface Props {
+  /**
+   * 选择的日
+   */
   dayNum?: number;
+  /**
+   * 是否选中
+   */
   checked?: boolean;
+  /**
+   * 是否是今天
+   */
   today?: boolean;
+  /**
+   * 是否选中的天
+   */
   enable?: boolean;
+  /**
+   * 选择天的回调函数
+   */
   selectDay?: (value: number, e: React.MouseEvent) => void;
+  /**
+   * 每个格子的高度
+   */
   eachHeight?: number;
 }
+
+const backgroundFun = (props: {
+  checked?: boolean;
+  enable?: boolean;
+  theme: Theme;
+}) => {
+  const { checked, enable } = props;
+  if (checked) {
+    return props.theme.palette.primary[500];
+  }
+  if (enable) {
+    return props.theme.palette.background.divider;
+  }
+  return null;
+};
+
+const borderFun = (props: {
+  enable?: boolean;
+  checked?: boolean;
+  today?: boolean;
+  theme: Theme;
+}) => {
+  const { today, checked, enable } = props;
+  if (today && checked) {
+    return `1px solid ${props.theme.palette.primary[500]}`;
+  }
+  if (today && !enable) {
+    return `1px solid ${props.theme.palette.text.secondary}`;
+  }
+  return null;
+};
 
 const DayBox = styled.div<{
   dayNum?: number;
@@ -26,18 +76,8 @@ const DayBox = styled.div<{
   display: grid;
   justify-content: center;
   align-items: center;
-  background: ${(props) =>
-    props.checked ? props.theme.palette.primary[500] : null};
-  background: ${(props) =>
-    props.enable ? props.theme.palette.background.divider : null};
-  border: ${(props) =>
-    props.today && !props.enable
-      ? `1px solid ${props.theme.palette.text.secondary}`
-      : null};
-  border: ${(props) =>
-    props.today && props.checked
-      ? `1px solid ${props.theme.palette.primary[500]}`
-      : null};
+  background: ${(props) => backgroundFun(props)};
+  border: ${(props) => borderFun(props)};
   box-shadow: ${(props) =>
     props.today
       ? `inset 0 0 0 1px ${props.theme.palette.background.paper}`
@@ -68,7 +108,7 @@ export default function CalendarDayItem(props: Props) {
       today={today}
       enable={enable}
       dayNum={dayNum}
-      onClick={(e) => selectDay(dayNum, e)}
+      onClick={(e) => selectDay && dayNum && selectDay(dayNum, e)}
       eachHeight={eachHeight}
     >
       <TitleBox checked={checked}>{dayNum}</TitleBox>

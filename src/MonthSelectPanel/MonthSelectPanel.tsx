@@ -14,23 +14,57 @@ const Month = styled.div`
 `;
 
 export interface Props {
+  /**
+   * 选择月的回调函数
+   */
   selectMonth: (value: number) => void;
+  /**
+   * 日历面板
+   */
   modelState?: number;
+  /**
+   * 最后选择的月份
+   */
   monthLastChecked?: number;
+  /**
+   * 最后选择的年
+   */
   yearLastChecked?: number;
+  /**
+   * 选择的月份
+   */
   monthChecked?: number;
+  /**
+   * 选择的年
+   */
   yearChecked?: number;
+  /**
+   * 年面板，向前或者向后,1或者-1
+   */
   prevAndNext?: number;
+  /**
+   * 是否最后选中
+   */
   isLastChecked?: boolean;
+  /**
+   * 点击日后选择的日期
+   */
   allDayLastChecked: string | number;
+  /**
+   * 每个格子的高度
+   */
   eachHeight?: number;
+  /**
+   * 只是选择年月
+   */
+  onlyYearMonth?: boolean;
 }
 
 /**
  * 月面板组件
  */
 export default function MonthSelectPanel(props: Props) {
-  const { yearChecked, allDayLastChecked } = props;
+  const { yearChecked, allDayLastChecked, onlyYearMonth } = props;
 
   const year = yearChecked;
   const now = new Date();
@@ -162,6 +196,22 @@ export default function MonthSelectPanel(props: Props) {
                 />
               );
             }
+          }
+          if (
+            onlyYearMonth &&
+            props.yearLastChecked === props.yearChecked &&
+            monthItem.monthNum === props.monthChecked
+          ) {
+            return (
+              <MonthItem
+                title={monthItem.title}
+                key={monthItem.title}
+                selectMonth={props.selectMonth}
+                monthNum={monthItem.monthNum}
+                checked
+                eachHeight={props.eachHeight}
+              />
+            );
           }
           return (
             <MonthItem

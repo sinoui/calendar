@@ -121,6 +121,7 @@ export default function TimeSelectPanel(props: Props) {
   } = props;
 
   const h = time.substring(0, 2);
+
   // eslint-disable-next-line radix
   const hourNum = h && parseInt(time.substring(0, 2));
   // eslint-disable-next-line radix

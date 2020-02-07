@@ -3,13 +3,37 @@ import YearItem from './YearItem';
 import YearSelectPanelLayout from './YearSelectPanelLayout';
 
 export interface Props {
+  /**
+   * 选择年的回调函数
+   */
   selectYear: (value: string) => void;
+  /**
+   * 最后选择的月份
+   */
   monthLastChecked?: number;
+  /**
+   * 最后选择的年
+   */
   yearLastChecked?: number;
+  /**
+   * 选择的月份
+   */
   monthChecked?: number;
+  /**
+   * 选择的年
+   */
   yearChecked: number;
+  /**
+   * 年面板，向前或者向后,1或者-1
+   */
   prevAndNext: number;
+  /**
+   * 是否最后选中
+   */
   isLastChecked: boolean;
+  /**
+   * 每个格子的高度
+   */
   eachHeight?: number;
 }
 

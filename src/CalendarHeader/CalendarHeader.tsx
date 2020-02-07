@@ -11,26 +11,48 @@ const SpaceColumn = styled.div`
 `;
 
 export interface Props {
+  /**
+   * 年-月展示信息
+   */
   yearMonthMessage?: string;
+  /**
+   * 点击年-月回调函数
+   */
   onClickYearMonthSelect?: () => void;
+  /**
+   * 上一个按钮回调函数
+   */
   onClickPrevButton: () => void;
+  /**
+   * 下一个按钮回调函数
+   */
   onClickNextButton: () => void;
-  modelState?: number;
-  monthLastChecked: number;
-  yearLastChecked?: number;
-  monthChecked?: number;
-  yearChecked?: number;
-  prevAndNext?: number;
+  /**
+   * 日历面板
+   */
+  modelState: number;
+  /**
+   * 选择的月份
+   */
+  monthChecked: number;
+  /**
+   * 选择的年
+   */
+  yearChecked: number;
+  /**
+   * 年面板，向前或者向后,1或者-1
+   */
+  prevAndNext: number;
 }
 
 /**
  * 日历顶部组件
  */
 function getYearSelectButtonMessage(
-  monthChecked?: number,
-  yearChecked?: number,
-  prevAndNext?: number,
-  modelState?: number,
+  monthChecked: number,
+  yearChecked: number,
+  prevAndNext: number,
+  modelState: number,
 ) {
   let returnMessage;
   if (modelState === 1) {
@@ -60,8 +82,6 @@ export default function CalendarHeader(props: Props) {
     prevAndNext,
     modelState,
     onClickYearMonthSelect,
-    monthLastChecked,
-    yearLastChecked,
     onClickPrevButton,
     onClickNextButton,
   } = props;
@@ -83,7 +103,7 @@ export default function CalendarHeader(props: Props) {
     );
   };
 
-  function NextButton() {
+  const NextButton = () => {
     return (
       <IconButton onClick={onClickNextButton}>
         <Icon>
@@ -91,22 +111,17 @@ export default function CalendarHeader(props: Props) {
         </Icon>
       </IconButton>
     );
-  }
+  };
 
   return (
     <CalendarHeaderLayout>
       <YearMonthSelect
         onClickYearMonthSelect={onClickYearMonthSelect}
-        monthLastChecked={monthLastChecked}
-        yearLastChecked={yearLastChecked}
-        monthChecked={monthChecked}
-        yearChecked={yearChecked}
-        modelState={modelState}
         yearSelectButtonMessage={yearSelectButtonMessage}
       />
       <SpaceColumn />
-      <PrevButton onClickPrevButton={onClickPrevButton} />
-      <NextButton onClickNextButton={onClickNextButton} />
+      <PrevButton />
+      <NextButton />
     </CalendarHeaderLayout>
   );
 }
