@@ -55,6 +55,9 @@ function getYearSelectButtonMessage(
   modelState: number,
 ) {
   let returnMessage;
+  /**
+   * 年面板
+   */
   if (modelState === 1) {
     const remainderYear = yearChecked % 24;
     const pageFirstYear = yearChecked - remainderYear;
@@ -64,9 +67,15 @@ function getYearSelectButtonMessage(
     }
     returnMessage = `${changePageFirstYear}-${changePageFirstYear + 24}`;
   }
+  /**
+   * 月面板
+   */
   if (modelState === 2) {
     returnMessage = yearChecked;
   }
+  /**
+   * 日面板
+   */
   if (modelState === 0) {
     returnMessage = `${yearChecked}-${monthChecked
       .toString()
