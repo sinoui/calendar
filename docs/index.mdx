@@ -29,6 +29,14 @@ yarn add @sinoui/calendar
   }}
 </Playground>
 
+## 设置是否第一列显示周一
+
+<Playground>
+  {() => {
+    return <Calendar isFirstColJanu/>;
+  }}
+</Playground>
+
 ## 设置每个格子高度的日历
 
 <Playground>
@@ -85,6 +93,22 @@ yarn add @sinoui/calendar
   }}
 </Playground>
 
+## 设置最小值和最大值
+
+<Playground>
+  {() => {
+    return <Calendar min="2020-02-01" max="2020-02-20" />;
+  }}
+</Playground>
+
+## 设置只是选择年月,最小值和最大值
+
+<Playground>
+  {() => {
+    return <Calendar onlyYearMonth min="2020-02" max="2020-11" />;
+  }}
+</Playground>
+
 ## 深色背景
 
 import { ThemeProvider } from 'styled-components';
@@ -121,3 +145,6 @@ Calendar 组件属性：
 | onOk                 | ()=>void                | 点击确定按钮的回调         |
 | className   | string          | 自定义类名                                                   |
 | onlyShowTime   | string          | 只是显示时间    |
+| max   | string          | 最大值    |
+| min   | string          | 最小值    |
+| isFirstColJanu   | boolean          | 是否第一列显示周一    |
