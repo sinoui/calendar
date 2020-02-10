@@ -32,6 +32,10 @@ export interface Props {
    * 设置每个格子的高度
    */
   eachHeight?: number;
+  /**
+   * 是否禁止选择当前日期之前的日期
+   */
+  todayBeforeForbidden?: boolean;
 }
 
 const backgroundFun = (props: {
@@ -64,11 +68,26 @@ const borderFun = (props: {
   return null;
 };
 
+const monthEachColor = (props: {
+  checked?: boolean;
+  todayBeforeForbidden?: boolean;
+  theme: Theme;
+}) => {
+  if (props.checked) {
+    return props.theme.palette.text.snackbar;
+  }
+  if (props.todayBeforeForbidden) {
+    return props.theme.palette.text.disabled;
+  }
+  return props.theme.palette.text.secondary;
+};
+
 const MonthBox = styled.div<{
   sameMonth?: boolean;
   checked?: boolean;
   enable?: boolean;
   eachHeight?: number;
+  todayBeforeForbidden?: boolean;
 }>`
   width: ${(props) => (props.eachHeight ? '100%' : '60px')};
   height: ${(props) => (props.eachHeight ? `${props.eachHeight}px` : '32px')};
@@ -84,17 +103,20 @@ const MonthBox = styled.div<{
       ? `inset 0 0 0 1px ${props.theme.palette.background.paper}`
       : null};
   &:hover {
-    cursor: pointer;
+    cursor: ${(props) =>
+      !props.todayBeforeForbidden ? 'pointer' : 'not-allowed'};
     background: ${(props) =>
-      !props.checked ? props.theme.palette.background.appBar : null};
+      !props.checked && !props.todayBeforeForbidden
+        ? props.theme.palette.background.appBar
+        : null};
   }
 `;
 
-const TitleBox = styled(Subheading)<{ checked?: boolean }>`
-  color: ${(props) =>
-    props.checked
-      ? props.theme.palette.text.snackbar
-      : props.theme.palette.text.secondary};
+const TitleBox = styled(Subheading)<{
+  checked?: boolean;
+  todayBeforeForbidden?: boolean;
+}>`
+  color: ${(props) => monthEachColor(props)};
 `;
 
 /**
@@ -109,6 +131,7 @@ export default function MonthItem(props: Props) {
     enable,
     eachHeight,
     title,
+    todayBeforeForbidden,
   } = props;
   return (
     <MonthBox
@@ -117,8 +140,11 @@ export default function MonthItem(props: Props) {
       onClick={() => selectMonth(monthNum)}
       enable={enable}
       eachHeight={eachHeight}
+      todayBeforeForbidden={todayBeforeForbidden}
     >
-      <TitleBox checked={checked}>{title}</TitleBox>
+      <TitleBox checked={checked} todayBeforeForbidden={todayBeforeForbidden}>
+        {title}
+      </TitleBox>
     </MonthBox>
   );
 }
