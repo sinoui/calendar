@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Body1 } from 'sinoui-components/Text';
+import { Theme } from '@sinoui/theme';
 
 export interface Props {
   /**
@@ -29,7 +30,11 @@ export interface Props {
   eachHeight?: number;
 }
 
-const backgroundFun = (props: { checked?: boolean; enable?: boolean }) => {
+const backgroundFun = (props: {
+  checked?: boolean;
+  enable?: boolean;
+  theme: Theme;
+}) => {
   const { checked, enable } = props;
   if (checked) {
     return props.theme.palette.primary[500];
@@ -40,7 +45,11 @@ const backgroundFun = (props: { checked?: boolean; enable?: boolean }) => {
   return null;
 };
 
-const borderFun = (props: { checked?: boolean; sameMonth?: boolean }) => {
+const borderFun = (props: {
+  checked?: boolean;
+  sameMonth?: boolean;
+  theme: Theme;
+}) => {
   const { sameMonth, checked } = props;
   if (sameMonth && checked) {
     return `1px solid ${props.theme.palette.primary[500]}`;
