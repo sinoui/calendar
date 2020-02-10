@@ -120,19 +120,16 @@ export default function TimeSelectPanel(props: Props) {
     onlyShowTime,
   } = props;
 
-  const h = time.substring(0, 2);
+  const h = parseInt(time.substring(0, 2), 10);
+  const hourNum = h && parseInt(time.substring(0, 2), 10);
+  const minuteNum =
+    parseInt(time.substring(3, 5), 10) && parseInt(time.substring(3, 5), 10);
+  const secondNum =
+    parseInt(time.substring(6, 8), 10) && parseInt(time.substring(6, 8), 10);
 
-  // eslint-disable-next-line radix
-  const hourNum = h && parseInt(time.substring(0, 2));
-  // eslint-disable-next-line radix
-  const minuteNum = time.substring(3, 5) && parseInt(time.substring(3, 5));
-  // eslint-disable-next-line radix
-  const secondNum = time.substring(6, 8) && parseInt(time.substring(6, 8));
-
-  const hourRef = useRef(null);
-  const minuteRef = useRef(null);
-
-  const secondRef = useRef(null);
+  const hourRef: React.MutableRefObject<any> = useRef(null);
+  const minuteRef: React.MutableRefObject<any> = useRef(null);
+  const secondRef: React.MutableRefObject<any> = useRef(null);
 
   useEffect(() => {
     if (hourRef) {

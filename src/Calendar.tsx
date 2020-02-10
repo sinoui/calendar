@@ -82,13 +82,31 @@ export interface Props {
    * 点击日后选择的日期
    */
   allDayLastChecked: string | number;
+  /**
+   * 最大值
+   */
+  max?: string;
+  /**
+   * 最小值
+   */
+  min?: string;
+  /**
+   * 是否第一列显示周一
+   */
+  isFirstColJanu?: boolean;
 }
 
 /**
  * 日历整体组件
  */
 function Calendar(props: Props) {
-  const { dateTime, onlyYearMonth, showTime, onlyShowTime } = props;
+  const {
+    dateTime,
+    onlyYearMonth,
+    showTime,
+    onlyShowTime,
+    isFirstColJanu,
+  } = props;
   const date = dateTime ? dayjs(dateTime) : dayjs();
   const month = date.month() + 1;
   const year = date.year();
@@ -112,7 +130,7 @@ function Calendar(props: Props) {
   const [monthChecked, setMonthChecked] = useState(month);
   const [yearChecked, setYearChecked] = useState(year);
   const [prevAndNext, setPrevAndNext] = useState(0);
-  const [day, setDay] = useState(dateTime ? dayNow : 0);
+  const [day, setDay] = useState(dayNow);
   const [isLastChecked, setIsLastChecked] = useState(!!dateTime);
   const [allDayLastChecked, setAllDayLastChecked] = useState('');
   const [timeOpen, setTimeOpen] = useState(false);
@@ -161,6 +179,24 @@ function Calendar(props: Props) {
    * @memberof Calendar
    */
   const checkMonth = (monthNum: number) => {
+    const selectDayVal = `${yearChecked}-${monthNum
+      .toString()
+      .padStart(2, '0')}`;
+
+    const { todayBeforeForbidden, max, min } = props;
+    if (
+      (onlyYearMonth &&
+        todayBeforeForbidden &&
+        selectDayVal < dayjs().format('YYYY-MM')) ||
+      (onlyYearMonth &&
+        !showTime &&
+        ((max && min && selectDayVal > max && selectDayVal < min) ||
+          (max && selectDayVal > max) ||
+          (min && selectDayVal < min)))
+    ) {
+      return;
+    }
+
     if (props.onlyYearMonth) {
       setModelState(2);
       setYearLastChecked(yearChecked);
@@ -218,8 +254,14 @@ function Calendar(props: Props) {
       .toString()
       .padStart(2, '0')}-${dayVal.toString().padStart(2, '0')}`;
 
-    const { todayBeforeForbidden } = props;
-    if (todayBeforeForbidden && selectDayVal < dayjs().format('YYYY-MM-DD')) {
+    const { todayBeforeForbidden, max, min } = props;
+    if (
+      (todayBeforeForbidden && selectDayVal < dayjs().format('YYYY-MM-DD')) ||
+      (!showTime &&
+        ((max && min && selectDayVal > max && selectDayVal < min) ||
+          (max && selectDayVal > max) ||
+          (min && selectDayVal < min)))
+    ) {
       return;
     }
 
@@ -285,6 +327,11 @@ function Calendar(props: Props) {
           dayNum={day}
           isLastChecked={isLastChecked}
           eachHeight={props.eachHeight}
+          todayBeforeForbidden={props.todayBeforeForbidden}
+          max={props.max}
+          min={props.min}
+          showTime={props.showTime}
+          isFirstColJanu={props.isFirstColJanu}
         />
       );
       break;
@@ -314,6 +361,9 @@ function Calendar(props: Props) {
           allDayLastChecked={allDayLastChecked}
           eachHeight={props.eachHeight}
           onlyYearMonth={props.onlyYearMonth}
+          max={props.max}
+          min={props.min}
+          showTime={props.showTime}
         />
       );
   }
@@ -362,7 +412,9 @@ function Calendar(props: Props) {
           modelState={modelState}
           prevAndNext={prevAndNext}
         />
-        {modelState === 0 && <CalendarWeekBar />}
+        {modelState === 0 && (
+          <CalendarWeekBar isFirstColJanu={isFirstColJanu} />
+        )}
         <Divider style={{ marginBottom: '8px' }} />
         {model}
       </>

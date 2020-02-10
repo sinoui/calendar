@@ -58,6 +58,22 @@ export interface Props {
    * 只是选择年月
    */
   onlyYearMonth?: boolean;
+  /**
+   * 是否禁止选择当前日期之前的日期
+   */
+  todayBeforeForbidden?: boolean;
+  /**
+   * 最大值
+   */
+  max?: string;
+  /**
+   * 最小值
+   */
+  min?: string;
+  /**
+   * 是否显示时间
+   */
+  showTime?: string;
 }
 
 /**
@@ -96,6 +112,25 @@ export default function MonthSelectPanel(props: Props) {
     yearCheckedAll = '';
   }
 
+  const isTodayBeforeForbidden = (i: number) => {
+    const { todayBeforeForbidden, max, min, showTime } = props;
+    const selectDayVal = `${yearChecked}-${i.toString().padStart(2, '0')}`;
+
+    if (
+      (onlyYearMonth &&
+        todayBeforeForbidden &&
+        selectDayVal < dayjs().format('YYYY-MM')) ||
+      (onlyYearMonth &&
+        !showTime &&
+        ((max && min && selectDayVal > max && selectDayVal < min) ||
+          (max && selectDayVal > max) ||
+          (min && selectDayVal < min)))
+    ) {
+      return true;
+    }
+    return false;
+  };
+
   return (
     <>
       <Month>
@@ -119,6 +154,9 @@ export default function MonthSelectPanel(props: Props) {
                     checked
                     sameMonth
                     eachHeight={props.eachHeight}
+                    todayBeforeForbidden={isTodayBeforeForbidden(
+                      monthItem.monthNum,
+                    )}
                   />
                 );
               }
@@ -134,6 +172,9 @@ export default function MonthSelectPanel(props: Props) {
                     monthNum={monthItem.monthNum}
                     sameMonth
                     eachHeight={props.eachHeight}
+                    todayBeforeForbidden={isTodayBeforeForbidden(
+                      monthItem.monthNum,
+                    )}
                   />
                 );
               }
@@ -146,6 +187,9 @@ export default function MonthSelectPanel(props: Props) {
                   sameMonth
                   enable
                   eachHeight={props.eachHeight}
+                  todayBeforeForbidden={isTodayBeforeForbidden(
+                    monthItem.monthNum,
+                  )}
                 />
               );
             }
@@ -163,6 +207,9 @@ export default function MonthSelectPanel(props: Props) {
                   monthNum={monthItem.monthNum}
                   checked
                   eachHeight={props.eachHeight}
+                  todayBeforeForbidden={isTodayBeforeForbidden(
+                    monthItem.monthNum,
+                  )}
                 />
               );
             }
@@ -175,6 +222,9 @@ export default function MonthSelectPanel(props: Props) {
                   monthNum={monthItem.monthNum}
                   sameMonth
                   eachHeight={props.eachHeight}
+                  todayBeforeForbidden={isTodayBeforeForbidden(
+                    monthItem.monthNum,
+                  )}
                 />
               );
             }
@@ -193,6 +243,9 @@ export default function MonthSelectPanel(props: Props) {
                   monthNum={monthItem.monthNum}
                   checked
                   eachHeight={props.eachHeight}
+                  todayBeforeForbidden={isTodayBeforeForbidden(
+                    monthItem.monthNum,
+                  )}
                 />
               );
             }
@@ -210,6 +263,9 @@ export default function MonthSelectPanel(props: Props) {
                 monthNum={monthItem.monthNum}
                 checked
                 eachHeight={props.eachHeight}
+                todayBeforeForbidden={isTodayBeforeForbidden(
+                  monthItem.monthNum,
+                )}
               />
             );
           }
@@ -220,6 +276,7 @@ export default function MonthSelectPanel(props: Props) {
               selectMonth={props.selectMonth}
               monthNum={monthItem.monthNum}
               eachHeight={props.eachHeight}
+              todayBeforeForbidden={isTodayBeforeForbidden(monthItem.monthNum)}
             />
           );
         })}
