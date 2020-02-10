@@ -48,6 +48,26 @@ export interface Props {
    * 每个格子的高度
    */
   eachHeight?: number;
+  /**
+   * 是否禁止选择当前日期之前的日期
+   */
+  todayBeforeForbidden?: boolean;
+  /**
+   * 最大值
+   */
+  max?: string;
+  /**
+   * 最小值
+   */
+  min?: string;
+  /**
+   * 是否显示时间
+   */
+  showTime?: string;
+  /**
+   * 是否第一列显示周一
+   */
+  isFirstColJanu?: boolean;
 }
 
 /**
@@ -86,6 +106,30 @@ export default function CalendarDayGrid(props: Props) {
     );
   };
 
+  const isTodayBeforeForbidden = (i: number) => {
+    const {
+      todayBeforeForbidden,
+      yearChecked,
+      monthChecked,
+      max,
+      min,
+      showTime,
+    } = props;
+    const selectDayVal = `${yearChecked}-${monthChecked
+      .toString()
+      .padStart(2, '0')}-${i.toString().padStart(2, '0')}`;
+    if (
+      (todayBeforeForbidden && selectDayVal < dayjs().format('YYYY-MM-DD')) ||
+      (!showTime &&
+        ((max && min && selectDayVal > max && selectDayVal < min) ||
+          (max && selectDayVal > max) ||
+          (min && selectDayVal < min)))
+    ) {
+      return true;
+    }
+    return false;
+  };
+
   /**
    * 获取每个月的天数数据
    *
@@ -101,25 +145,55 @@ export default function CalendarDayGrid(props: Props) {
     const weekDay = firstday.day(); // 获取周几
     const monthDayNum = monthDay.date(); // 获取每个月的天数
     const dayArr = [];
-    if (weekDay > 0) {
-      for (let i = 1; i <= weekDay; i += 1) {
-        dayArr.push(<CalendarDayItem eachHeight={props.eachHeight} />);
+    if (props.isFirstColJanu) {
+      if (weekDay === 0) {
+        for (let i = 1; i <= 6; i += 1) {
+          dayArr.push(<CalendarDayItem eachHeight={props.eachHeight} />);
+        }
+      }
+      if (weekDay > 1) {
+        for (let i = 1; i <= weekDay - 1; i += 1) {
+          dayArr.push(<CalendarDayItem eachHeight={props.eachHeight} />);
+        }
+      }
+
+      for (let i = 1; i <= monthDayNum; i += 1) {
+        dayArr.push(
+          <CalendarDayItem
+            dayNum={i}
+            key={i}
+            selectDay={props.selectDay}
+            checked={isChecked(i)}
+            enable={isEnable(i)}
+            today={isToday(i)}
+            eachHeight={props.eachHeight}
+            todayBeforeForbidden={isTodayBeforeForbidden(i)}
+          />,
+        );
+      }
+    } else {
+      if (weekDay > 0) {
+        for (let i = 1; i <= weekDay; i += 1) {
+          dayArr.push(<CalendarDayItem eachHeight={props.eachHeight} />);
+        }
+      }
+
+      for (let i = 1; i <= monthDayNum; i += 1) {
+        dayArr.push(
+          <CalendarDayItem
+            dayNum={i}
+            key={i}
+            selectDay={props.selectDay}
+            checked={isChecked(i)}
+            enable={isEnable(i)}
+            today={isToday(i)}
+            eachHeight={props.eachHeight}
+            todayBeforeForbidden={isTodayBeforeForbidden(i)}
+          />,
+        );
       }
     }
 
-    for (let i = 1; i <= monthDayNum; i += 1) {
-      dayArr.push(
-        <CalendarDayItem
-          dayNum={i}
-          key={i}
-          selectDay={props.selectDay}
-          checked={isChecked(i)}
-          enable={isEnable(i)}
-          today={isToday(i)}
-          eachHeight={props.eachHeight}
-        />,
-      );
-    }
     return { dayArr, month, weekDay };
   };
 
