@@ -104,7 +104,7 @@ export default function CalendarHeader(props: Props) {
 
   const PrevButton = () => {
     return (
-      <IconButton onClick={onClickPrevButton}>
+      <IconButton onClick={onClickPrevButton} data-testid="prevButton">
         <Icon>
           <MdChevronLeft />
         </Icon>
@@ -114,7 +114,7 @@ export default function CalendarHeader(props: Props) {
 
   const NextButton = () => {
     return (
-      <IconButton onClick={onClickNextButton}>
+      <IconButton onClick={onClickNextButton} data-testid="nextButton">
         <Icon>
           <MdChevronRight />
         </Icon>

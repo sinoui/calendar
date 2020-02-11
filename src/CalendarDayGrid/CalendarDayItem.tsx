@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Subheading } from 'sinoui-components/Text';
 import { Theme } from '@sinoui/theme';
+import classNames from 'classnames';
 
 export interface Props {
   /**
@@ -32,6 +33,10 @@ export interface Props {
    * 是否禁止选择当前日期之前的日期
    */
   todayBeforeForbidden?: boolean;
+  /**
+   * 自定义类名
+   */
+  className?: string;
 }
 
 const backgroundFun = (props: {
@@ -129,6 +134,7 @@ export default function CalendarDayItem(props: Props) {
     selectDay,
     eachHeight,
     todayBeforeForbidden,
+    className,
   } = props;
 
   return (
@@ -140,6 +146,9 @@ export default function CalendarDayItem(props: Props) {
       onClick={(e) => selectDay && dayNum && selectDay(dayNum, e)}
       eachHeight={eachHeight}
       todayBeforeForbidden={todayBeforeForbidden}
+      className={classNames('sinoui-calendar-eachDay', className, {
+        'sinoui-calendar--dayChecked': checked,
+      })}
     >
       <TitleBox checked={checked} todayBeforeForbidden={todayBeforeForbidden}>
         {dayNum}

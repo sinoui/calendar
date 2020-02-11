@@ -134,7 +134,7 @@ export default function MonthSelectPanel(props: Props) {
   return (
     <>
       <Month>
-        <Body2>{year}</Body2>
+        <Body2 data-testid="calendarYear">{year}</Body2>
       </Month>
       <MonthSelectPanelLayout>
         {monthArr.map((monthItem) => {

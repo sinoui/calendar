@@ -17,7 +17,7 @@ export interface Props {
   /**
    * 日期选择事件监听
    */
-  onChange: (value: string) => void;
+  onChange?: (value: string) => void;
   /**
    * 是否禁止选择当前日期之前的日期
    */
@@ -37,7 +37,7 @@ export interface Props {
   /**
    * 点击确定按钮的回调
    */
-  onOk: () => void;
+  onOk?: () => void;
   /**
    * 自定义类名
    */
@@ -46,42 +46,6 @@ export interface Props {
    * 只是选择时间
    */
   onlyShowTime?: string;
-  /**
-   * 日历面板
-   */
-  modelState: number;
-  /**
-   * 最后选择的月份
-   */
-  monthLastChecked: number;
-  /**
-   * 最后选择的年
-   */
-  yearLastChecked: number;
-  /**
-   * 选择的月份
-   */
-  monthChecked: number;
-  /**
-   * 选择的年
-   */
-  yearChecked: number;
-  /**
-   * 年面板，向前或者向后,1或者-1
-   */
-  prevAndNext: number;
-  /**
-   * 是否最后选中
-   */
-  isLastChecked: boolean;
-  /**
-   * 选择的日
-   */
-  day: number;
-  /**
-   * 点击日后选择的日期
-   */
-  allDayLastChecked: string | number;
   /**
    * 最大值
    */
@@ -445,7 +409,7 @@ function Calendar(props: Props) {
   }
 
   return (
-    <CalendarLayout data-testid="calendarDay">
+    <CalendarLayout>
       {showTime ? (
         <>
           {timeOpen ? (

@@ -148,12 +148,16 @@ export default function CalendarDayGrid(props: Props) {
     if (props.isFirstColJanu) {
       if (weekDay === 0) {
         for (let i = 1; i <= 6; i += 1) {
-          dayArr.push(<CalendarDayItem eachHeight={props.eachHeight} />);
+          dayArr.push(
+            <CalendarDayItem eachHeight={props.eachHeight} key={`${i}11`} />,
+          );
         }
       }
       if (weekDay > 1) {
         for (let i = 1; i <= weekDay - 1; i += 1) {
-          dayArr.push(<CalendarDayItem eachHeight={props.eachHeight} />);
+          dayArr.push(
+            <CalendarDayItem eachHeight={props.eachHeight} key={`${i}22`} />,
+          );
         }
       }
 
@@ -174,7 +178,13 @@ export default function CalendarDayGrid(props: Props) {
     } else {
       if (weekDay > 0) {
         for (let i = 1; i <= weekDay; i += 1) {
-          dayArr.push(<CalendarDayItem eachHeight={props.eachHeight} />);
+          dayArr.push(
+            <CalendarDayItem
+              eachHeight={props.eachHeight}
+              key={`${i}11`}
+              className="sinoui-calendar--dayItem"
+            />,
+          );
         }
       }
 
@@ -248,7 +258,7 @@ export default function CalendarDayGrid(props: Props) {
   return (
     <>
       <Month eachHeight={eachHeight}>
-        <Body2>{monthCh}</Body2>
+        <Body2 data-testid="calendarMonth">{monthCh}</Body2>
       </Month>
       {weekDay <= 1 ? <br /> : null}
       <CalendarDayGridLayout>{dayArr.map((day) => day)}</CalendarDayGridLayout>

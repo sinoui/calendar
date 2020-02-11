@@ -21,8 +21,10 @@ export interface Props {
 function YearMonthSelect(props: Props) {
   const { onClickYearMonthSelect, yearSelectButtonMessage } = props;
   return (
-    <Button onClick={onClickYearMonthSelect}>
-      <Subheading>{yearSelectButtonMessage}</Subheading>
+    <Button onClick={onClickYearMonthSelect} data-testid="switchYearButton">
+      <Subheading data-testid="switchYearContent">
+        {yearSelectButtonMessage}
+      </Subheading>
       <Icon>
         <MdArrowDropDown />
       </Icon>

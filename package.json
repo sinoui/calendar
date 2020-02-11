@@ -70,6 +70,7 @@
     "@types/styled-components": "^4.4.2",
     "classnames": "^2.2.6",
     "dayjs": "^1.8.19",
+    "lodash-es": "^4.17.15",
     "react-icons": "^3.8.0",
     "sinoui-components": "^0.2.9",
     "styled-components": "^5.0.0"

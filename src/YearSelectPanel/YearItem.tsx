@@ -103,6 +103,7 @@ export default function YearItem(props: Props) {
       onClick={() => selectYear(title)}
       enable={enable}
       eachHeight={eachHeight}
+      className="sinoui-calendar--yearEach"
     >
       <TitleBox checked={checked}>{title}</TitleBox>
     </YearBox>
