@@ -200,7 +200,6 @@ export default function CalendarDayGrid(props: Props) {
             eachHeight={props.eachHeight}
             todayBeforeForbidden={isTodayBeforeForbidden(i)}
             className="sinoui-calendar--dayEach"
-            clickDay={props.clickDay}
           />,
         );
       }
