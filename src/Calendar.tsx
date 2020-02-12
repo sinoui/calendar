@@ -71,22 +71,42 @@ function Calendar(props: Props) {
     onlyShowTime,
     isFirstColJanu,
   } = props;
-  const date = dateTime ? dayjs(dateTime) : dayjs();
-  const month = date.month() + 1;
-  const year = date.year();
-  const dayNow = date.date();
-  const hour = date
-    .hour()
-    .toString()
-    .padStart(2, '0');
-  const minute = date
-    .minute()
-    .toString()
-    .padStart(2, '0');
-  const second = date
-    .second()
-    .toString()
-    .padStart(2, '0');
+
+  const dateShowFun = () => {
+    if (dateTime && onlyShowTime) {
+      return dateTime;
+    }
+    if (dateTime) {
+      return dayjs(dateTime);
+    }
+    return dayjs();
+  };
+  const date: any = dateShowFun();
+
+  const month = !onlyShowTime && date.month() + 1;
+  const year = !onlyShowTime && date.year();
+  const dayNow = !onlyShowTime && date.date();
+  const hour =
+    dateTime && onlyShowTime
+      ? date.substring(0, 2)
+      : date
+          .hour()
+          .toString()
+          .padStart(2, '0');
+  const minute =
+    dateTime && onlyShowTime
+      ? date.substring(3, 5)
+      : date
+          .minute()
+          .toString()
+          .padStart(2, '0');
+  const second =
+    dateTime && onlyShowTime
+      ? date.substring(6, 8)
+      : date
+          .second()
+          .toString()
+          .padStart(2, '0');
 
   const [modelState, setModelState] = useState(onlyYearMonth ? 2 : 0);
   const [monthLastChecked, setMonthLastChecked] = useState(month);

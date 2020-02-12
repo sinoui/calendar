@@ -18,7 +18,7 @@ export interface Props {
    */
   today?: boolean;
   /**
-   * 没有选中，是否当天
+   * 今天,并且没有选中任何
    */
   enable?: boolean;
   /**
@@ -148,6 +148,10 @@ export default function CalendarDayItem(props: Props) {
       todayBeforeForbidden={todayBeforeForbidden}
       className={classNames('sinoui-calendar-eachDay', className, {
         'sinoui-calendar--dayChecked': checked,
+        'sinoui-calendar--dayEnable': enable,
+        'sinoui-calendar--dayTodyAndChecked': today && checked,
+        'sinoui-calendar--dayHaveChecked': today && !enable,
+        'sinoui-calendar--dayForbidden': todayBeforeForbidden,
       })}
     >
       <TitleBox checked={checked} todayBeforeForbidden={todayBeforeForbidden}>

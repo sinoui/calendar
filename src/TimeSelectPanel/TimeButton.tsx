@@ -48,7 +48,9 @@ export default function TimeButton(props: Props) {
         (timeOpen ? (
           <Button onClick={onDatepickerButtonClick}>选择日期</Button>
         ) : (
-          <Button onClick={onTimepickerButtonClick}>选择时间</Button>
+          <Button onClick={onTimepickerButtonClick} data-testid="timeButton">
+            选择时间
+          </Button>
         ))}
       <Button onClick={onOk}>确定</Button>
     </ButtonContent>

@@ -44,24 +44,18 @@
     ]
   },
   "peerDependencies": {
-    "react": ">=16.8.0"
+    "react": ">=16.8.0",
+    "styled-components": ">=4.0.0"
   },
   "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
+    "production": [">0.2%", "not dead", "not op_mini all"],
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
     ]
   },
-  "files": [
-    "dist",
-    "assets"
-  ],
+  "files": ["dist", "assets"],
   "dependencies": {
     "@babel/polyfill": "^7.8.3",
     "@babel/runtime": "^7.8.3",
@@ -72,8 +66,7 @@
     "dayjs": "^1.8.19",
     "lodash-es": "^4.17.15",
     "react-icons": "^3.8.0",
-    "sinoui-components": "^0.2.9",
-    "styled-components": "^5.0.0"
+    "sinoui-components": "^0.2.9"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^4.2.4",

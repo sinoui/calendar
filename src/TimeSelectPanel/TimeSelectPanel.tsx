@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { MenuListItem, MenuList } from 'sinoui-components/Menu';
 import Divider from 'sinoui-components/Divider';
+import classNames from 'classnames';
 
 /**
  * 时间组件
@@ -132,13 +133,18 @@ export default function TimeSelectPanel(props: Props) {
   const secondRef: React.MutableRefObject<any> = useRef(null);
 
   useEffect(() => {
-    if (hourRef) {
+    if (hourRef && hourRef.current) {
       hourRef.current.scrollTop = 32 * hourNum;
     }
-    if (minuteRef) {
+    if (minuteRef && minuteRef.current) {
       minuteRef.current.scrollTop = 32 * minuteNum;
     }
-    if (secondRef && showTime !== 'HH:mm' && onlyShowTime !== 'HH:mm') {
+    if (
+      secondRef &&
+      secondRef.current &&
+      showTime !== 'HH:mm' &&
+      onlyShowTime !== 'HH:mm'
+    ) {
       secondRef.current.scrollTop = 32 * secondNum;
     }
   }, [hourNum, minuteNum, onlyShowTime, secondNum, showTime]);
@@ -157,7 +163,7 @@ export default function TimeSelectPanel(props: Props) {
             {hours.map((hour) => (
               <MenuListItemContent
                 value={hour}
-                key={hour}
+                key={`${hour}`}
                 selected={hour === time.substring(0, 2)}
                 onClick={() =>
                   showTime === 'HH:mm' || onlyShowTime === 'HH:mm'
@@ -168,6 +174,9 @@ export default function TimeSelectPanel(props: Props) {
                         time.replace(/\d{2}(:\d{2}:\d{2})/g, `${hour}$1`),
                       )
                 }
+                className={classNames({
+                  'sinoui-calendar--hour': hour === time.substring(0, 2),
+                })}
               >
                 {hour}
               </MenuListItemContent>
@@ -179,7 +188,7 @@ export default function TimeSelectPanel(props: Props) {
             {minutes.map((minute) => (
               <MenuListItemContent
                 value={minute}
-                key={minute}
+                key={`${minute}`}
                 selected={minute === time.substring(3, 5)}
                 onClick={() =>
                   showTime === 'HH:mm' || onlyShowTime === 'HH:mm'
@@ -190,6 +199,9 @@ export default function TimeSelectPanel(props: Props) {
                         time.replace(/(\d{2}:)\d{2}(:\d{2})/g, `$1${minute}$2`),
                       )
                 }
+                className={classNames({
+                  'sinoui-calendar--minute': minute === time.substring(3, 5),
+                })}
               >
                 {minute}
               </MenuListItemContent>
@@ -202,13 +214,16 @@ export default function TimeSelectPanel(props: Props) {
               {seconds.map((second) => (
                 <MenuListItemContent
                   value={second}
-                  key={second}
+                  key={`${second}`}
                   selected={second === time.substring(6, 8)}
                   onClick={() =>
                     props.handleChangeTime(
                       time.replace(/(\d{2}:\d{2}:)\d{2}/g, `$1${second}`),
                     )
                   }
+                  className={classNames({
+                    'sinoui-calendar--second': second === time.substring(6, 8),
+                  })}
                 >
                   {second}
                 </MenuListItemContent>

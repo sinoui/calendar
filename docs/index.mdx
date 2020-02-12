@@ -49,7 +49,7 @@ yarn add @sinoui/calendar
 
 <Playground>
   {() => {
-    return <Calendar showTime='HH:mm:ss' />;
+    return <Calendar showTime='HH:mm:ss'  />;
   }}
 </Playground>
 
@@ -69,11 +69,27 @@ yarn add @sinoui/calendar
   }}
 </Playground>
 
+## 设置只是显示时间,时分秒,有默认值
+
+<Playground>
+  {() => {
+    return <Calendar onlyShowTime='HH:mm:ss' dateTime="00:21:56" />;
+  }}
+</Playground>
+
 ## 设置只是显示时间,时分
 
 <Playground>
   {() => {
     return <Calendar onlyShowTime='HH:mm' />;
+  }}
+</Playground>
+
+## 设置只是显示时间,时分，有默认值
+
+<Playground>
+  {() => {
+    return <Calendar onlyShowTime='HH:mm' dateTime="00:21" />;
   }}
 </Playground>
 

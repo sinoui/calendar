@@ -182,7 +182,7 @@ export default function CalendarDayGrid(props: Props) {
             <CalendarDayItem
               eachHeight={props.eachHeight}
               key={`${i}11`}
-              className="sinoui-calendar--dayItem"
+              className="sinoui-calendar--dayItem sinoui-calendar--dayEach"
             />,
           );
         }
@@ -199,6 +199,8 @@ export default function CalendarDayGrid(props: Props) {
             today={isToday(i)}
             eachHeight={props.eachHeight}
             todayBeforeForbidden={isTodayBeforeForbidden(i)}
+            className="sinoui-calendar--dayEach"
+            clickDay={props.clickDay}
           />,
         );
       }
