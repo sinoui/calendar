@@ -184,12 +184,13 @@ function Calendar(props: Props) {
     if (props.onlyYearMonth) {
       setModelState(2);
       setYearLastChecked(yearChecked);
+      setIsLastChecked(true);
     } else {
       setModelState(0);
+      setIsLastChecked(false);
     }
 
     setMonthChecked(monthNum);
-    setIsLastChecked(false);
 
     // 选择月抛出事件
     if (props.onlyYearMonth) {

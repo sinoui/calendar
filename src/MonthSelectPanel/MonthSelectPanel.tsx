@@ -184,12 +184,12 @@ export default function MonthSelectPanel(props: Props) {
                   key={monthItem.title}
                   selectMonth={props.selectMonth}
                   monthNum={monthItem.monthNum}
-                  sameMonth
                   enable
                   eachHeight={props.eachHeight}
                   todayBeforeForbidden={isTodayBeforeForbidden(
                     monthItem.monthNum,
                   )}
+                  /* sameMonth */
                 />
               );
             }

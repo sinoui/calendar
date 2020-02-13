@@ -47,14 +47,14 @@ const backgroundFun = (props: {
 
 const borderFun = (props: {
   checked?: boolean;
-  sameMonth?: boolean;
+  sameYear?: boolean;
   theme: Theme;
 }) => {
-  const { sameMonth, checked } = props;
-  if (sameMonth && checked) {
+  const { sameYear, checked } = props;
+  if (sameYear && checked) {
     return `1px solid ${props.theme.palette.primary[500]}`;
   }
-  if (sameMonth) {
+  if (sameYear) {
     return `1px solid ${props.theme.palette.text.secondary}`;
   }
   return null;

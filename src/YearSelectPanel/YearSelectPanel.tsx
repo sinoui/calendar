@@ -92,17 +92,6 @@ export default function YearSelectPanel(props: Props) {
             />
           );
         }
-        if (nowYear === yearNum) {
-          return (
-            <YearItem
-              title={yearNum}
-              key={yearNum}
-              selectYear={props.selectYear}
-              sameYear
-              eachHeight={props.eachHeight}
-            />
-          );
-        }
         if (props.yearChecked === yearNum) {
           return (
             <YearItem
@@ -114,6 +103,18 @@ export default function YearSelectPanel(props: Props) {
             />
           );
         }
+        if (nowYear === yearNum) {
+          return (
+            <YearItem
+              title={yearNum}
+              key={yearNum}
+              selectYear={props.selectYear}
+              sameYear
+              eachHeight={props.eachHeight}
+            />
+          );
+        }
+
         return (
           <YearItem
             title={yearNum}
