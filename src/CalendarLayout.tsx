@@ -8,6 +8,8 @@ const CalendarLayout = styled(Paper).attrs((props) => ({
   width: 100%;
   box-sizing: content-box;
   min-width: 300px;
+  overflow-x: hidden;
+  overflow-y: hidden;
 `;
 
 export default CalendarLayout;

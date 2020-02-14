@@ -48,24 +48,33 @@
     "styled-components": ">=4.0.0"
   },
   "browserslist": {
-    "production": [">0.2%", "not dead", "not op_mini all"],
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
     ]
   },
-  "files": ["dist", "assets"],
+  "files": [
+    "dist",
+    "assets"
+  ],
   "dependencies": {
     "@babel/polyfill": "^7.8.3",
     "@babel/runtime": "^7.8.3",
     "@sinoui/theme": "^0.3.5",
     "@types/classnames": "^2.2.9",
+    "@types/react-transition-group": "^4.2.3",
     "@types/styled-components": "^4.4.2",
     "classnames": "^2.2.6",
     "dayjs": "^1.8.19",
     "lodash-es": "^4.17.15",
     "react-icons": "^3.8.0",
+    "react-transition-group": "^4.3.0",
     "sinoui-components": "^0.2.9"
   },
   "devDependencies": {

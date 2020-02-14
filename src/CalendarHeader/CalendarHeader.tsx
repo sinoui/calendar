@@ -127,6 +127,7 @@ export default function CalendarHeader(props: Props) {
       <YearMonthSelect
         onClickYearMonthSelect={onClickYearMonthSelect}
         yearSelectButtonMessage={yearSelectButtonMessage}
+        modelState={modelState}
       />
       <SpaceColumn />
       <PrevButton />

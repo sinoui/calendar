@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import Divider from 'sinoui-components/Divider';
 import dayjs from 'dayjs';
+import { CSSTransition } from 'react-transition-group';
+import { createGlobalStyle } from 'styled-components';
 import CalendarDayGrid from './CalendarDayGrid';
 import CalendarHeader from './CalendarHeader';
 import CalendarWeekBar from './CalendarWeekBar';
@@ -8,6 +10,26 @@ import MonthSelectPanel from './MonthSelectPanel';
 import YearSelectPanel from './YearSelectPanel';
 import CalendarLayout from './CalendarLayout';
 import TimeSelectPanel, { TimeButton } from './TimeSelectPanel';
+
+const Globalstyle = createGlobalStyle`
+ .sinoui-calendar-exit {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+  .sinoui-calendar-exit-active {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+  }
+
+  .sinoui-calendar-dayModal-exit{
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+  .sinoui-calendar-dayModal-exit-active{
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+`;
 
 export interface Props {
   /**
@@ -123,6 +145,8 @@ function Calendar(props: Props) {
       ? `${hour}:${minute}`
       : `${hour}:${minute}:${second}`,
   );
+  const [isMonthPrevNext, setIsMonthPrevNext] = useState(false);
+  const [isYearMonthChange, setIsYearMonthChange] = useState(false);
 
   /**
    * 点击日历头  年部分切换日历主体
@@ -130,12 +154,16 @@ function Calendar(props: Props) {
    * @memberof Calendar
    */
   const changeModelState = () => {
+    setIsMonthPrevNext(true);
     if (props.onlyYearMonth && (modelState === 1 || modelState === 2)) {
       setModelState(1);
+      setIsYearMonthChange(true);
     } else if (!props.onlyYearMonth && (modelState === 1 || modelState === 2)) {
       setModelState(0);
+      setIsYearMonthChange(true);
     } else {
       setModelState(1);
+      setIsYearMonthChange(true);
     }
   };
 
@@ -146,6 +174,7 @@ function Calendar(props: Props) {
    * @memberof Calendar
    */
   const checkYear = (yearNum: string) => {
+    setIsYearMonthChange(true);
     if (modelState === 2) {
       setModelState(0);
       setYearChecked(parseInt(yearNum, 10));
@@ -188,6 +217,7 @@ function Calendar(props: Props) {
     } else {
       setModelState(0);
       setIsLastChecked(false);
+      setIsYearMonthChange(true);
     }
 
     setMonthChecked(monthNum);
@@ -264,6 +294,7 @@ function Calendar(props: Props) {
    */
 
   const prevButton = () => {
+    setIsMonthPrevNext(true);
     if (modelState === 1) {
       setPrevAndNext(prevAndNext - 1);
     }
@@ -283,6 +314,7 @@ function Calendar(props: Props) {
    * 下一个月
    */
   const nextButton = () => {
+    setIsMonthPrevNext(true);
     if (modelState === 1) {
       setPrevAndNext(prevAndNext + 1);
     }
@@ -397,11 +429,31 @@ function Calendar(props: Props) {
           modelState={modelState}
           prevAndNext={prevAndNext}
         />
-        {modelState === 0 && (
-          <CalendarWeekBar isFirstColJanu={isFirstColJanu} />
-        )}
-        <Divider style={{ marginBottom: '8px' }} />
-        {model}
+        <CSSTransition
+          classNames="sinoui-calendar-dayModal"
+          timeout={300}
+          in={isYearMonthChange}
+          onEnter={() => {
+            setIsYearMonthChange(false);
+          }}
+        >
+          <div>
+            {modelState === 0 && (
+              <CalendarWeekBar isFirstColJanu={isFirstColJanu} />
+            )}
+            <Divider style={{ marginBottom: '8px' }} />
+            <CSSTransition
+              classNames="sinoui-calendar"
+              timeout={300}
+              in={isMonthPrevNext}
+              onEnter={() => {
+                setIsMonthPrevNext(false);
+              }}
+            >
+              <div>{model}</div>
+            </CSSTransition>
+          </div>
+        </CSSTransition>
       </>
     );
   };
@@ -456,6 +508,7 @@ function Calendar(props: Props) {
       ) : (
         CalendarDate()
       )}
+      <Globalstyle />
     </CalendarLayout>
   );
 }
