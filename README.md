@@ -1,6 +1,22 @@
-# calendar
+# calendar [![npm version](https://img.shields.io/npm/v/@sinoui/calendar)](https://www.npmjs.com/package/@sinoui/calendar) [![downloads](https://img.shields.io/npm/dm/@sinoui/calendar)](https://www.npmjs.com/package/@sinoui/calendar)
 
-这是由[ts-lib-scripts](https://github.com/sinoui/ts-lib-scripts)创建的TypeScript库项目。
+日历。遵循 [Material Design States](https://material.io/design/interaction/states.html#usage) 规范。 [文档](https://sinoui.github.io/calendar)
+
+## 安装
+
+```shell
+yarn add @sinoui/calendar
+```
+
+## 使用
+
+```tsx
+import Calendar from '@sinoui/calendar';
+
+function CalendarDemo() {
+  return <Calendar />;
+}
+```
 
 ## 本地开发
 
@@ -57,4 +73,5 @@ yarn doc:publish
 ```shell
 yarn doc:publish
 ```
+
 # calendar

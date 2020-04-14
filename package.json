@@ -1,11 +1,23 @@
 {
-  "name": "calendar",
-  "version": "0.1.0",
+  "name": "@sinoui/calendar",
+  "version": "0.1.0-beta.0",
   "license": "MIT",
   "main": "dist/index.js",
+  "description": "遵循 Material Design 的日历效果实现",
+  "homepage": "https://sinoui.github.io/calendar",
   "umd:main": "dist/calendar.umd.production.js",
   "module": "dist/calendar.esm.js",
   "types": "types/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sinoui/calendar.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sinoui/calendar/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "start": "ts-lib-tools watch",
     "test": "ts-lib-tools test",
