@@ -1,5 +1,5 @@
 {
-  "include": ["src", "src/**/*.json"],
+  "include": ["src", "src/**/*.json", "stories"],
   "exclude": ["node_modules"],
   "compilerOptions": {
     "target": "es5",
@@ -31,6 +31,8 @@
     "composite": true,
     "resolveJsonModule": true,
     "incremental": true,
-    "plugins": [{ "name": "typescript-plugin-css-modules" }]
+    "plugins": [{
+      "name": "typescript-plugin-css-modules"
+    }]
   }
 }

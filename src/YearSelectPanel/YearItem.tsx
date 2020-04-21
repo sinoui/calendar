@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Body1 } from 'sinoui-components/Text';
+import Body1 from '@sinoui/core/Body1';
 import { Theme } from '@sinoui/theme';
 
 export interface Props {
@@ -28,6 +28,10 @@ export interface Props {
    * 每个格子的高度
    */
   eachHeight?: number;
+  /**
+   * grid布局样式
+   */
+  style?: React.CSSProperties;
 }
 
 const backgroundFun = (props: {
@@ -37,10 +41,10 @@ const backgroundFun = (props: {
 }) => {
   const { checked, enable } = props;
   if (checked) {
-    return props.theme.palette.primary[500];
+    return props.theme.palette.primary.main;
   }
   if (enable) {
-    return props.theme.palette.background.divider;
+    return props.theme.palette.background.default;
   }
   return null;
 };
@@ -52,7 +56,7 @@ const borderFun = (props: {
 }) => {
   const { sameYear, checked } = props;
   if (sameYear && checked) {
-    return `1px solid ${props.theme.palette.primary[500]}`;
+    return `1px solid ${props.theme.palette.primary.main}`;
   }
   if (sameYear) {
     return `1px solid ${props.theme.palette.text.secondary}`;
@@ -83,19 +87,33 @@ const YearBox = styled.div<{
   &:hover {
     cursor: pointer;
     background: ${(props) =>
-      !props.checked ? props.theme.palette.background.appBar : null};
+      !props.checked ? props.theme.palette.action.hover : null};
   }
 `;
 
-const TitleBox = styled(Body1)<{ checked?: boolean }>`
+const TitleBox = styled(Body1)<{ checked?: boolean; eachHeight?: number }>`
   color: ${(props) =>
     props.checked
-      ? props.theme.palette.text.snackbar
+      ? props.theme.palette.common.white
       : props.theme.palette.text.secondary};
+  width: 100%;
+  height: 100%;
+  line-height: ${(props) =>
+    props.eachHeight ? `${props.eachHeight}px` : '32px'};
+  text-align: center;
+  display: block;
 `;
 
 export default function YearItem(props: Props) {
-  const { sameYear, checked, selectYear, title, enable, eachHeight } = props;
+  const {
+    sameYear,
+    checked,
+    selectYear,
+    title,
+    enable,
+    eachHeight,
+    style,
+  } = props;
   return (
     <YearBox
       sameYear={sameYear}
@@ -104,8 +122,11 @@ export default function YearItem(props: Props) {
       enable={enable}
       eachHeight={eachHeight}
       className="sinoui-calendar--yearEach"
+      style={style}
     >
-      <TitleBox checked={checked}>{title}</TitleBox>
+      <TitleBox checked={checked} eachHeight={eachHeight} as="span">
+        {title}
+      </TitleBox>
     </YearBox>
   );
 }

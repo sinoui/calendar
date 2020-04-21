@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Subheading } from 'sinoui-components/Text';
+import Subtitle1 from '@sinoui/core/Subtitle1';
 import { Theme } from '@sinoui/theme';
 
 export interface Props {
@@ -36,6 +36,10 @@ export interface Props {
    * 是否禁止选择当前日期之前的日期
    */
   todayBeforeForbidden?: boolean;
+  /**
+   * grid布局样式
+   */
+  style?: React.CSSProperties;
 }
 
 const backgroundFun = (props: {
@@ -45,10 +49,10 @@ const backgroundFun = (props: {
 }) => {
   const { checked, enable } = props;
   if (checked) {
-    return props.theme && props.theme.palette.primary[500];
+    return props.theme && props.theme.palette.primary.main;
   }
   if (enable) {
-    return props.theme && props.theme.palette.background.divider;
+    return props.theme && props.theme.palette.background.default;
   }
   return null;
 };
@@ -60,7 +64,7 @@ const borderFun = (props: {
 }) => {
   const { sameMonth, checked } = props;
   if (sameMonth && checked) {
-    return props.theme && `1px solid ${props.theme.palette.primary[500]}`;
+    return props.theme && `1px solid ${props.theme.palette.primary.main}`;
   }
   if (sameMonth) {
     return props.theme && `1px solid ${props.theme.palette.text.secondary}`;
@@ -74,7 +78,7 @@ const monthEachColor = (props: {
   theme: Theme;
 }) => {
   if (props.checked) {
-    return props.theme.palette.text.snackbar;
+    return props.theme.palette.common.white;
   }
   if (props.todayBeforeForbidden) {
     return props.theme.palette.text.disabled;
@@ -91,6 +95,8 @@ const MonthBox = styled.div<{
 }>`
   width: ${(props) => (props.eachHeight ? '100%' : '60px')};
   height: ${(props) => (props.eachHeight ? `${props.eachHeight}px` : '32px')};
+  line-height: ${(props) =>
+    props.eachHeight ? `${props.eachHeight}px` : '32px'};
   margin: 2px 0;
   border-radius: ${(props) => !props.eachHeight && '999px'};
   display: grid;
@@ -102,21 +108,25 @@ const MonthBox = styled.div<{
     props.sameMonth
       ? `inset 0 0 0 1px ${props.theme.palette.background.paper}`
       : null};
+  text-align: center;
   &:hover {
     cursor: ${(props) =>
       !props.todayBeforeForbidden ? 'pointer' : 'not-allowed'};
     background: ${(props) =>
       !props.checked && !props.todayBeforeForbidden
-        ? props.theme.palette.background.appBar
+        ? props.theme.palette.action.hover
         : null};
   }
 `;
 
-const TitleBox = styled(Subheading)<{
+const TitleBox = styled(Subtitle1)<{
   checked?: boolean;
   todayBeforeForbidden?: boolean;
 }>`
   color: ${(props) => monthEachColor(props)};
+  display: block;
+  width: 100%;
+  height: 100%;
 `;
 
 /**
@@ -132,6 +142,7 @@ export default function MonthItem(props: Props) {
     eachHeight,
     title,
     todayBeforeForbidden,
+    style,
   } = props;
   return (
     <MonthBox
@@ -141,8 +152,13 @@ export default function MonthItem(props: Props) {
       enable={enable}
       eachHeight={eachHeight}
       todayBeforeForbidden={todayBeforeForbidden}
+      style={style}
     >
-      <TitleBox checked={checked} todayBeforeForbidden={todayBeforeForbidden}>
+      <TitleBox
+        checked={checked}
+        todayBeforeForbidden={todayBeforeForbidden}
+        as="span"
+      >
         {title}
       </TitleBox>
     </MonthBox>

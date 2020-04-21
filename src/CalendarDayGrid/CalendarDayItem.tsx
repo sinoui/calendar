@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Subheading } from 'sinoui-components/Text';
+import Subtitle1 from '@sinoui/core/Subtitle1';
 import { Theme } from '@sinoui/theme';
 import classNames from 'classnames';
 
@@ -37,6 +37,10 @@ export interface Props {
    * 自定义类名
    */
   className?: string;
+  /**
+   * grid布局样式
+   */
+  style?: React.CSSProperties;
 }
 
 const backgroundFun = (props: {
@@ -46,10 +50,10 @@ const backgroundFun = (props: {
 }) => {
   const { checked, enable } = props;
   if (checked) {
-    return props.theme.palette.primary[500];
+    return props.theme.palette.primary.main;
   }
   if (enable) {
-    return props.theme.palette.background.divider;
+    return props.theme.palette.background.default;
   }
   return null;
 };
@@ -62,7 +66,7 @@ const borderFun = (props: {
 }) => {
   const { today, checked, enable } = props;
   if (today && checked) {
-    return `1px solid ${props.theme.palette.primary[500]}`;
+    return `1px solid ${props.theme.palette.primary.main}`;
   }
   if (today && !enable) {
     return `1px solid ${props.theme.palette.text.secondary}`;
@@ -76,7 +80,7 @@ const dayEachColor = (props: {
   theme: Theme;
 }) => {
   if (props.checked) {
-    return props.theme.palette.text.snackbar;
+    return props.theme.palette.common.white;
   }
   if (props.todayBeforeForbidden) {
     return props.theme.palette.text.disabled;
@@ -95,7 +99,6 @@ const DayBox = styled.div<{
   border-radius: ${(props) => !props.eachHeight && '50%'};
   width: ${(props) => (props.eachHeight ? '100%' : '40px')};
   height: ${(props) => (props.eachHeight ? `${props.eachHeight}px` : '40px')};
-  padding: 4px;
   box-sizing: border-box;
   display: grid;
   justify-content: center;
@@ -111,15 +114,22 @@ const DayBox = styled.div<{
       !props.todayBeforeForbidden ? 'pointer' : 'not-allowed'};
     background: ${(props) =>
       !props.checked && props.dayNum && !props.todayBeforeForbidden
-        ? props.theme.palette.background.appBar
+        ? props.theme.palette.action.hover
         : null};
   }
 `;
-const TitleBox = styled(Subheading)<{
+const TitleBox = styled(Subtitle1)<{
   checked?: boolean;
   todayBeforeForbidden?: boolean;
+  eachHeight?: number;
 }>`
   color: ${(props) => dayEachColor(props)};
+  width: 100%;
+  height: 100%;
+  display: block;
+  line-height: ${(props) =>
+    props.eachHeight ? `${props.eachHeight}px` : '40px'};
+  text-align: center;
 `;
 
 /**
@@ -135,6 +145,7 @@ export default function CalendarDayItem(props: Props) {
     eachHeight,
     todayBeforeForbidden,
     className,
+    style,
   } = props;
 
   return (
@@ -153,8 +164,14 @@ export default function CalendarDayItem(props: Props) {
         'sinoui-calendar--dayHaveChecked': today && !enable,
         'sinoui-calendar--dayForbidden': todayBeforeForbidden,
       })}
+      style={style}
     >
-      <TitleBox checked={checked} todayBeforeForbidden={todayBeforeForbidden}>
+      <TitleBox
+        checked={checked}
+        todayBeforeForbidden={todayBeforeForbidden}
+        as="span"
+        eachHeight={eachHeight}
+      >
         {dayNum}
       </TitleBox>
     </DayBox>

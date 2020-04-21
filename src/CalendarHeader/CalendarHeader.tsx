@@ -1,13 +1,31 @@
 import React from 'react';
 import styled from 'styled-components';
-import IconButton from 'sinoui-components/IconButton';
-import Icon from 'sinoui-components/Icon';
+import IconButton from '@sinoui/core/IconButton';
+import SvgIcon from '@sinoui/core/SvgIcon';
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
 import CalendarHeaderLayout from './CalendarHeaderLayout';
 import YearMonthSelect from './YearMonthSelect';
 
 const SpaceColumn = styled.div`
   flex: 1 1 auto;
+`;
+
+const IconButtonWrapper = styled(IconButton)<{ space?: boolean }>`
+  width: 24px;
+  height: 24px;
+  margin: ${(props) => props.space && '0px 24px 0px 0px'};
+
+  > .sinoui-icon-button__ripple-layout {
+    left: 0px;
+    top: 0px;
+    width: 24px;
+    height: 24px;
+  }
+
+  > .sinoui-icon-button__ripple-layout > .sinoui-icon-button__ripple {
+    width: 24px;
+    height: 24px;
+  }
 `;
 
 export interface Props {
@@ -104,21 +122,17 @@ export default function CalendarHeader(props: Props) {
 
   const PrevButton = () => {
     return (
-      <IconButton onClick={onClickPrevButton} data-testid="prevButton">
-        <Icon>
-          <MdChevronLeft />
-        </Icon>
-      </IconButton>
+      <IconButtonWrapper space onClick={onClickPrevButton}>
+        <SvgIcon data-testid="prevButton" as={MdChevronLeft} />
+      </IconButtonWrapper>
     );
   };
 
   const NextButton = () => {
     return (
-      <IconButton onClick={onClickNextButton} data-testid="nextButton">
-        <Icon>
-          <MdChevronRight />
-        </Icon>
-      </IconButton>
+      <IconButtonWrapper onClick={onClickNextButton}>
+        <SvgIcon data-testid="nextButton" as={MdChevronRight} />
+      </IconButtonWrapper>
     );
   };
 

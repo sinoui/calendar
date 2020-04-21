@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import styled from 'styled-components';
-import Paper from 'sinoui-components/Paper';
+import Paper from '@sinoui/core/Paper';
 
 const CalendarLayout = styled(Paper).attrs((props) => ({
   className: classNames('sinoui-calendar', props.className),

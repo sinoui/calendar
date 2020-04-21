@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Body2 } from 'sinoui-components/Text';
+import Body2 from '@sinoui/core/Body2';
 import dayjs from 'dayjs';
 import CalendarDayGridLayout from './CalendarDayGridLayout';
 import CalendarDayItem from './CalendarDayItem';
@@ -259,7 +259,9 @@ export default function CalendarDayGrid(props: Props) {
   return (
     <>
       <Month eachHeight={eachHeight}>
-        <Body2 data-testid="calendarMonth">{monthCh}</Body2>
+        <Body2 data-testid="calendarMonth" as="span">
+          {monthCh}
+        </Body2>
       </Month>
       {weekDay <= 1 ? <br /> : null}
       <CalendarDayGridLayout>{dayArr.map((day) => day)}</CalendarDayGridLayout>

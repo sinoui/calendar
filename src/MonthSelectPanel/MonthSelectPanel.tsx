@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Body2 } from 'sinoui-components/Text';
+import Body2 from '@sinoui/core/Body2';
 import dayjs from 'dayjs';
 import MonthSelectPanelLayout from './MonthSelectPanelLayout';
 import MonthItem from './MonthItem';
@@ -11,6 +11,7 @@ const Month = styled.div`
   display: grid;
   align-items: center;
   padding-left: 14px;
+  display: -ms-grid;
 `;
 
 export interface Props {
@@ -70,9 +71,6 @@ export interface Props {
    * 最小值
    */
   min?: string;
-  /**
-   * 是否显示时间
-   */
   showTime?: string;
 }
 
@@ -189,7 +187,6 @@ export default function MonthSelectPanel(props: Props) {
                   todayBeforeForbidden={isTodayBeforeForbidden(
                     monthItem.monthNum,
                   )}
-                  /* sameMonth */
                 />
               );
             }

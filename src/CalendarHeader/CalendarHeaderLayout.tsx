@@ -8,8 +8,9 @@ const CalendarHeaderLayout = styled.div.attrs((props) => ({
   className: classNames('sinoui-calendar-header', props.className),
 }))`
   display: flex;
-  height: 54px;
-  padding: 0px 8px 0px 0px;
+  align-items: center;
+  height: 36px;
+  padding: 0px 8px 18px 0px;
 `;
 
 export default CalendarHeaderLayout;

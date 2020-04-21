@@ -1,7 +1,7 @@
 import React from 'react';
-import Button from 'sinoui-components/Button';
-import Icon from 'sinoui-components/Icon';
-import { Subheading } from 'sinoui-components/Text';
+import Button from '@sinoui/core/Button';
+import SvgIcon from '@sinoui/core/SvgIcon';
+import Subtitle1 from '@sinoui/core/Subtitle1';
 import { MdArrowDropDown, MdArrowDropUp } from 'react-icons/md';
 
 export interface Props {
@@ -26,10 +26,10 @@ function YearMonthSelect(props: Props) {
   const { onClickYearMonthSelect, yearSelectButtonMessage, modelState } = props;
   return (
     <Button onClick={onClickYearMonthSelect} data-testid="switchYearButton">
-      <Subheading data-testid="switchYearContent">
+      <Subtitle1 data-testid="switchYearContent">
         {yearSelectButtonMessage}
-      </Subheading>
-      <Icon>{modelState === 1 ? <MdArrowDropUp /> : <MdArrowDropDown />}</Icon>
+      </Subtitle1>
+      <SvgIcon as={modelState === 1 ? MdArrowDropUp : MdArrowDropDown} />
     </Button>
   );
 }

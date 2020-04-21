@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import Divider from 'sinoui-components/Divider';
+import React, { useState, useCallback } from 'react';
+import Divider from '@sinoui/core/Divider';
 import dayjs from 'dayjs';
 import { CSSTransition } from 'react-transition-group';
 import { createGlobalStyle } from 'styled-components';
@@ -111,24 +111,15 @@ function Calendar(props: Props) {
   const hour =
     dateTime && onlyShowTime
       ? date.substring(0, 2)
-      : date
-          .hour()
-          .toString()
-          .padStart(2, '0');
+      : date.hour().toString().padStart(2, '0');
   const minute =
     dateTime && onlyShowTime
       ? date.substring(3, 5)
-      : date
-          .minute()
-          .toString()
-          .padStart(2, '0');
+      : date.minute().toString().padStart(2, '0');
   const second =
     dateTime && onlyShowTime
       ? date.substring(6, 8)
-      : date
-          .second()
-          .toString()
-          .padStart(2, '0');
+      : date.second().toString().padStart(2, '0');
 
   const [modelState, setModelState] = useState(onlyYearMonth ? 2 : 0);
   const [monthLastChecked, setMonthLastChecked] = useState(month);
@@ -235,59 +226,67 @@ function Calendar(props: Props) {
   /**
    * 值改变时的回调函数
    */
-  const onValueChange = () => {
-    if (props.onChange) {
-      if (props.showTime) {
-        if (props.onlyShowTime) {
-          props.onChange(`${time}`);
+  const onValueChange = useCallback(
+    (dayVal) => {
+      if (props.onChange) {
+        if (props.showTime) {
+          if (props.onlyShowTime) {
+            props.onChange(`${time}`);
+          } else {
+            props.onChange(
+              `${yearChecked}-${monthChecked
+                .toString()
+                .padStart(2, '0')}-${dayVal
+                .toString()
+                .padStart(2, '0')} ${time}`,
+            );
+          }
         } else {
           props.onChange(
             `${yearChecked}-${monthChecked
               .toString()
-              .padStart(2, '0')}-${day.toString().padStart(2, '0')} ${time}`,
+              .padStart(2, '0')}-${dayVal.toString().padStart(2, '0')}`,
           );
         }
-      } else {
-        props.onChange(
-          `${yearChecked}-${monthChecked
-            .toString()
-            .padStart(2, '0')}-${day.toString().padStart(2, '0')}`,
-        );
       }
-    }
-  };
+    },
+    [props, time, yearChecked, monthChecked],
+  );
 
   /**
    * 点击天
    * @param day
    * @param e
    */
-  const selectDay = (dayVal: number, e: React.MouseEvent) => {
-    e.stopPropagation();
+  const selectDay = useCallback(
+    (dayVal: number, e: React.MouseEvent) => {
+      e.stopPropagation();
 
-    const selectDayVal = `${yearChecked}-${monthChecked
-      .toString()
-      .padStart(2, '0')}-${dayVal.toString().padStart(2, '0')}`;
+      const selectDayVal = `${yearChecked}-${monthChecked
+        .toString()
+        .padStart(2, '0')}-${dayVal.toString().padStart(2, '0')}`;
 
-    const { todayBeforeForbidden, max, min } = props;
-    if (
-      (todayBeforeForbidden && selectDayVal < dayjs().format('YYYY-MM-DD')) ||
-      (!showTime &&
-        ((max && min && selectDayVal > max && selectDayVal < min) ||
-          (max && selectDayVal > max) ||
-          (min && selectDayVal < min)))
-    ) {
-      return;
-    }
+      const { todayBeforeForbidden, max, min } = props;
+      if (
+        (todayBeforeForbidden && selectDayVal < dayjs().format('YYYY-MM-DD')) ||
+        (!showTime &&
+          ((max && min && selectDayVal > max && selectDayVal < min) ||
+            (max && selectDayVal > max) ||
+            (min && selectDayVal < min)))
+      ) {
+        return;
+      }
 
-    setDay(dayVal);
-    setYearLastChecked(yearChecked);
-    setIsLastChecked(true);
-    setMonthLastChecked(monthChecked);
-    setAllDayLastChecked(`${yearChecked}-${monthChecked}-${dayVal}`);
+      setDay(dayVal);
+      setYearLastChecked(yearChecked);
+      setIsLastChecked(true);
+      setMonthLastChecked(monthChecked);
+      setAllDayLastChecked(`${yearChecked}-${monthChecked}-${dayVal}`);
 
-    onValueChange();
-  };
+      onValueChange(dayVal);
+    },
+    [yearChecked, monthChecked, props, showTime, onValueChange],
+  );
 
   /**
    * 上一个月
@@ -508,6 +507,7 @@ function Calendar(props: Props) {
       ) : (
         CalendarDate()
       )}
+
       <Globalstyle />
     </CalendarLayout>
   );

@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from 'sinoui-components/Button';
+import Button from '@sinoui/core/Button';
 import styled from 'styled-components';
 
 const ButtonContent = styled.div`
