@@ -169,7 +169,6 @@ export default function CalendarDayItem(props: Props) {
       <TitleBox
         checked={checked}
         todayBeforeForbidden={todayBeforeForbidden}
-        as="span"
         eachHeight={eachHeight}
       >
         {dayNum}

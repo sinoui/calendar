@@ -26,11 +26,7 @@ export interface Props {
 
 function CalendarWeekDayContent(props: Props) {
   const { children, style } = props;
-  return (
-    <CalendarWeekDay style={style} as="span">
-      {children}
-    </CalendarWeekDay>
-  );
+  return <CalendarWeekDay style={style}>{children}</CalendarWeekDay>;
 }
 
 export default CalendarWeekDayContent;

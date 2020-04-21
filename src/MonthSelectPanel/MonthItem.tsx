@@ -95,8 +95,6 @@ const MonthBox = styled.div<{
 }>`
   width: ${(props) => (props.eachHeight ? '100%' : '60px')};
   height: ${(props) => (props.eachHeight ? `${props.eachHeight}px` : '32px')};
-  line-height: ${(props) =>
-    props.eachHeight ? `${props.eachHeight}px` : '32px'};
   margin: 2px 0;
   border-radius: ${(props) => !props.eachHeight && '999px'};
   display: grid;
@@ -108,7 +106,6 @@ const MonthBox = styled.div<{
     props.sameMonth
       ? `inset 0 0 0 1px ${props.theme.palette.background.paper}`
       : null};
-  text-align: center;
   &:hover {
     cursor: ${(props) =>
       !props.todayBeforeForbidden ? 'pointer' : 'not-allowed'};
@@ -122,11 +119,15 @@ const MonthBox = styled.div<{
 const TitleBox = styled(Subtitle1)<{
   checked?: boolean;
   todayBeforeForbidden?: boolean;
+  eachHeight?: number;
 }>`
   color: ${(props) => monthEachColor(props)};
   display: block;
   width: 100%;
   height: 100%;
+  line-height: ${(props) =>
+    props.eachHeight ? `${props.eachHeight}px` : '32px'};
+  text-align: center;
 `;
 
 /**
@@ -157,7 +158,7 @@ export default function MonthItem(props: Props) {
       <TitleBox
         checked={checked}
         todayBeforeForbidden={todayBeforeForbidden}
-        as="span"
+        eachHeight={eachHeight}
       >
         {title}
       </TitleBox>

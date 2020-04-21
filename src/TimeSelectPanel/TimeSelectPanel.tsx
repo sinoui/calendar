@@ -18,6 +18,11 @@ const TimeSelectBox = styled.div<{ showTime?: string; onlyShowTime?: string }>`
   min-height: 270px;
   background-color: ${(props) => props.theme.palette.background.paper};
   padding: 0px 8px 0px;
+  display: -ms-grid;
+  -ms-gird-columns: ${(props) =>
+    props.showTime === 'HH:mm' || props.onlyShowTime === 'HH:mm'
+      ? '50% 50%'
+      : '33.33% 33.33% 33.33%'};
 `;
 
 const Div = styled.div`
@@ -156,6 +161,7 @@ export default function TimeSelectPanel(props: Props) {
         </Date>
       )}
       <Divider />
+
       <TimeSelectBox showTime={showTime} onlyShowTime={onlyShowTime}>
         <Div ref={hourRef}>
           <MenuListContent>

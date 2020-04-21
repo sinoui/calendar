@@ -124,7 +124,7 @@ export default function YearItem(props: Props) {
       className="sinoui-calendar--yearEach"
       style={style}
     >
-      <TitleBox checked={checked} eachHeight={eachHeight} as="span">
+      <TitleBox checked={checked} eachHeight={eachHeight}>
         {title}
       </TitleBox>
     </YearBox>
