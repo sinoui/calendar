@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import Popover from '@sinoui/core/Popover';
+import { PaperProps } from '@sinoui/core/Paper';
 import Calendar from '../Calendar';
 
 export interface Props {
@@ -23,6 +24,14 @@ export interface Props {
    * 日历关闭时的回调函数
    */
   onClose: () => void;
+  /**
+   * Popover样式
+   */
+  PaperProps?: PaperProps;
+  /**
+   * Popover dom元素
+   */
+  paperRef?: HTMLElement;
 }
 
 const InputWrapper = styled.input`
@@ -42,7 +51,15 @@ const CalendarWrapper = styled.div`
 `;
 
 function DatePickerContent(props: Props) {
-  const { open, value: valueProp, onChange, onClose, ...rest } = props;
+  const {
+    open,
+    value: valueProp,
+    onChange,
+    onClose,
+    PaperProps: paperProps = {},
+    paperRef,
+    ...rest
+  } = props;
 
   const [value, setValue] = useState(valueProp);
 
@@ -89,6 +106,10 @@ function DatePickerContent(props: Props) {
         transformOrigin={{
           vertical: 'top',
           horizontal: 'left',
+        }}
+        PaperProps={{
+          ...paperProps,
+          ref: paperRef,
         }}
         onRequestClose={onRequestClose}
         {...rest}
