@@ -23,6 +23,18 @@ const TimeSelectBox = styled.div<{ showTime?: string; onlyShowTime?: string }>`
     props.showTime === 'HH:mm' || props.onlyShowTime === 'HH:mm'
       ? '50% 50%'
       : '33.33% 33.33% 33.33%'};
+  > :nth-child(1) {
+    grid-column: 1;
+    -ms-grid-column: 1;
+  }
+  > :nth-child(2) {
+    grid-column: 2;
+    -ms-grid-column: 2;
+  }
+  > :nth-child(3) {
+    grid-column: 3;
+    -ms-grid-column: 3;
+  }
 `;
 
 const Div = styled.div`
