@@ -20,8 +20,6 @@ const CalendarDayGridLayout = styled.div.attrs((props) => ({
   min-height: 246px;
   display: -ms-grid;
   -ms-grid-columns: 14.29% 14.29% 14.29% 14.29% 14.29% 14.29% 14.29%;
-  -ms-grid-row-gap: 2px;
-  -ms-grid-column-gap: 2px;
 `;
 
 export interface Props {

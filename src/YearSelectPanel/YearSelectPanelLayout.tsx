@@ -19,8 +19,6 @@ const YearSelectPanelLayout = styled.div.attrs((props) => ({
   min-height: 270px;
   display: -ms-grid;
   -ms-grid-columns: 25% 25% 25% 25%;
-  -ms-grid-row-gap: 2px;
-  -ms-grid-column-gap: 2px;
 `;
 
 export interface Props {

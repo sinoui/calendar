@@ -13,8 +13,6 @@ const MonthSelectPanelBox = styled.div`
   min-height: 230px;
   display: -ms-grid;
   -ms-grid-columns: 25% 25% 25% 25%;
-  -ms-grid-row-gap: 2px;
-  -ms-grid-column-gap: 2px;
 `;
 
 export interface Props {
