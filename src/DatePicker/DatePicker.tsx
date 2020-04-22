@@ -88,7 +88,6 @@ const DatePicker = React.forwardRef((props: DatePickerProps, ref) => {
 
   const onBlur = (_event: React.FocusEvent<HTMLDivElement>) => {
     setFocused(false);
-    setOpen(false);
   };
 
   const type = {
