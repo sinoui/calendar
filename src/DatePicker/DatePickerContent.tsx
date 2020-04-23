@@ -96,7 +96,12 @@ function DatePickerContent(props: Props) {
 
   return (
     <>
-      <InputWrapper type="text" value={value} readOnly />
+      <InputWrapper
+        className="sinoui-data-picker__input"
+        type="text"
+        value={value}
+        readOnly
+      />
       <Popover
         open={open}
         anchorOrigin={{
