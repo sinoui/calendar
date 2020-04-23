@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import Menu, { MenuListItem } from '@sinoui/core/Menu';
+import { MenuListItem } from '@sinoui/core/Menu';
+import MenuList from '@sinoui/core/Menu/MenuList';
 import Divider from '@sinoui/core/Divider';
 
 /**
@@ -49,7 +50,7 @@ const Date = styled.div`
   padding: 10px 10px 5px;
 `;
 
-const MenuListContent = styled(Menu)<{
+const MenuListContent = styled(MenuList)<{
   showTime?: string;
   onlyShowTime?: string;
 }>`
@@ -221,7 +222,7 @@ export default function TimeSelectPanel(props: Props) {
         </Div>
         {showTime !== 'HH:mm' && onlyShowTime !== 'HH:mm' && (
           <Div ref={secondRef}>
-            <Menu>
+            <MenuList>
               {seconds.map((second) => (
                 <MenuListItemContent
                   value={second}
@@ -236,7 +237,7 @@ export default function TimeSelectPanel(props: Props) {
                   {second}
                 </MenuListItemContent>
               ))}
-            </Menu>
+            </MenuList>
           </Div>
         )}
       </TimeSelectBox>
