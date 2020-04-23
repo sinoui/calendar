@@ -1,0 +1,289 @@
+---
+name: DatePicker 日期选择框
+route: /datePicker
+---
+
+import { Playground } from 'docz';
+import { useState } from 'react';
+import DatePicker from '../src/DatePicker';
+import DatePickerDemo from './datePicker/DatePickerDemo';
+import DatePickerMethod from './datePicker/DatePickerMethod';
+
+# @sinoui/calendar
+
+日期选择框
+
+## 依赖安装
+
+```shell
+yarn add @sinoui/calendar
+```
+
+## 基本使用
+
+```tsx
+import { DatePicker } from '@sinoui/calendar';
+
+function DatePickerDemo() {
+  const [value, setValue] = useState('2020-05-18');
+
+  const onChange = useCallback((event) => {
+    setValue(event.target.value);
+  }, []);
+
+  return (
+    <ThemeProvider theme={defaultTheme}>
+      <DatePicker value={value} onChange={onChange} />
+    </ThemeProvider>
+  );
+}
+```
+
+效果展示：
+
+<DatePickerDemo />
+
+## 设置选择年月
+
+```tsx
+import { DatePicker } from '@sinoui/calendar';
+
+function DatePickerMethod() {
+  const { onlyYearMonth } = props;
+
+  const [value, setValue] = useState('');
+
+  const onChange = useCallback((event) => {
+    setValue(event.target.value);
+  }, []);
+
+  return (
+    <ThemeProvider theme={defaultTheme}>
+      <DatePicker value={value} onChange={onChange} onlyYearMonth />
+    </ThemeProvider>
+  );
+}
+```
+
+效果展示：
+
+<DatePickerMethod onlyYearMonth />
+
+## 禁止选择当前日期之前的日期
+
+```tsx
+import { DatePicker } from '@sinoui/calendar';
+
+function DatePickerMethod() {
+  const { onlyYearMonth } = props;
+
+  const [value, setValue] = useState('');
+
+  const onChange = useCallback((event) => {
+    setValue(event.target.value);
+  }, []);
+
+  return (
+    <ThemeProvider theme={defaultTheme}>
+      <DatePicker value={value} onChange={onChange} todayBeforeForbidden />
+    </ThemeProvider>
+  );
+}
+```
+
+效果展示：
+
+<DatePickerMethod todayBeforeForbidden />
+
+## 设置第一列显示周一
+
+```tsx
+import { DatePicker } from '@sinoui/calendar';
+
+function DatePickerMethod() {
+  const { onlyYearMonth } = props;
+
+  const [value, setValue] = useState('');
+
+  const onChange = useCallback((event) => {
+    setValue(event.target.value);
+  }, []);
+
+  return (
+    <ThemeProvider theme={defaultTheme}>
+      <DatePicker value={value} onChange={onChange} isFirstColJanu />
+    </ThemeProvider>
+  );
+}
+```
+
+效果展示：
+
+<DatePickerMethod isFirstColJanu />
+
+## 设置显示时间时分秒
+
+```tsx
+import { DatePicker } from '@sinoui/calendar';
+
+function DatePickerMethod() {
+  const { onlyYearMonth } = props;
+
+  const [value, setValue] = useState('');
+
+  const onChange = useCallback((event) => {
+    setValue(event.target.value);
+  }, []);
+
+  return (
+    <ThemeProvider theme={defaultTheme}>
+      <DatePicker value={value} onChange={onChange} showTime="HH:mm:ss" />
+    </ThemeProvider>
+  );
+}
+```
+
+效果展示：
+
+<DatePickerMethod showTime="HH:mm:ss" />
+
+## 设置显示时间时分
+
+```tsx
+import { DatePicker } from '@sinoui/calendar';
+
+function DatePickerMethod() {
+  const { onlyYearMonth } = props;
+
+  const [value, setValue] = useState('');
+
+  const onChange = useCallback((event) => {
+    setValue(event.target.value);
+  }, []);
+
+  return (
+    <ThemeProvider theme={defaultTheme}>
+      <DatePicker value={value} onChange={onChange} showTime="HH:mm" />
+    </ThemeProvider>
+  );
+}
+```
+
+效果展示：
+
+<DatePickerMethod showTime="HH:mm" />
+
+## 设置只是显示时间时分秒
+
+```tsx
+import { DatePicker } from '@sinoui/calendar';
+
+function DatePickerMethod() {
+  const { onlyYearMonth } = props;
+
+  const [value, setValue] = useState('');
+
+  const onChange = useCallback((event, val: string) => {
+    setValue(event.target.value);
+  }, []);
+
+  return (
+    <ThemeProvider theme={defaultTheme}>
+      <DatePicker value={value} onChange={onChange} onlyShowTime="HH:mm:ss" />
+    </ThemeProvider>
+  );
+}
+```
+
+效果展示：
+
+<DatePickerMethod onlyShowTime="HH:mm:ss" />
+
+## 设置只是显示时间时分
+
+```tsx
+import { DatePicker } from '@sinoui/calendar';
+
+function DatePickerMethod() {
+  const { onlyYearMonth } = props;
+
+  const [value, setValue] = useState('');
+
+  const onChange = useCallback((event) => {
+    setValue(event.target.value);
+  }, []);
+
+  return (
+    <ThemeProvider theme={defaultTheme}>
+      <DatePicker value={value} onChange={onChange} onlyShowTime="HH:mm" />
+    </ThemeProvider>
+  );
+}
+```
+
+效果展示：
+
+<DatePickerMethod onlyShowTime="HH:mm" />
+
+## 设置最小值和最大值
+
+```tsx
+import { DatePicker } from '@sinoui/calendar';
+
+function DatePickerMethod() {
+  const { onlyYearMonth } = props;
+
+  const [value, setValue] = useState('');
+
+  const onChange = useCallback((event) => {
+    setValue(event.target.value);
+  }, []);
+
+  return (
+    <ThemeProvider theme={defaultTheme}>
+      <DatePicker
+        value={value}
+        onChange={onChange}
+        min="2020-02-01"
+        max="2020-02-20"
+      />
+    </ThemeProvider>
+  );
+}
+```
+
+效果展示：
+
+<DatePickerMethod min="2020-02-01" max="2020-02-20" />
+
+## 设置选择年月的最小值和最大值
+
+```tsx
+import { DatePicker } from '@sinoui/calendar';
+
+function DatePickerMethod() {
+  const { onlyYearMonth } = props;
+
+  const [value, setValue] = useState('');
+
+  const onChange = useCallback((event) => {
+    setValue(event.target.value);
+  }, []);
+
+  return (
+    <ThemeProvider theme={defaultTheme}>
+      <DatePicker
+        value={value}
+        onChange={onChange}
+        onlyYearMonth
+        min="2020-02"
+        max="2020-11"
+      />
+    </ThemeProvider>
+  );
+}
+```
+
+效果展示：
+
+<DatePickerMethod onlyYearMonth min="2020-02" max="2020-11" />
