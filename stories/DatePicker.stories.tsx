@@ -10,8 +10,8 @@ export default {
 function DatePickerDemo() {
   const [value, setValue] = useState('2020-05-18');
 
-  const onChange = useCallback((_event, val: string) => {
-    setValue(val);
+  const onChange = useCallback((event) => {
+    setValue(event.target.value);
   }, []);
 
   return (
@@ -36,8 +36,8 @@ function DatePickerYearMonth(props: any) {
 
   const [value, setValue] = useState(valueProp);
 
-  const onChange = useCallback((_event, val: string) => {
-    setValue(val);
+  const onChange = useCallback((event) => {
+    setValue(event.target.value);
   }, []);
 
   return (
